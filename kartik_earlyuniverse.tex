@@ -1,14 +1,14 @@
 % ****** Start of file apssamp.tex ******
 %
-%   This file is part of the APS files in the REVTeX 4.1 distribution.
-%   Version 4.1r of REVTeX, August 2010
+%   This file is part of the APS files in the REVTeX 4.2 distribution.
+%   Version 4.2a of REVTeX, December 2014
 %
-%   Copyright (c) 2009, 2010 The American Physical Society.
+%   Copyright (c) 2014 The American Physical Society.
 %
-%   See the REVTeX 4 README file for restrictions and more information.$e
+%   See the REVTeX 4 README file for restrictions and more information.
 %
 % TeX'ing this file requires that you have AMS-LaTeX 2.0 installed
-% as well as the rest of the prerequisites for REVTeX 4.1
+% as well as the rest of the prerequisites for REVTeX 4.2
 %
 % See the REVTeX 4 README file
 % It also requires running BibTeX. The commands are as follows:
@@ -19,26 +19,26 @@
 %  4)  latex apssamp.tex
 %
 \documentclass[%
-%reprint,
+ reprint,
 %superscriptaddress,
-%groupedaddress,hardware
+%groupedaddress,
 %unsortedaddress,
 %runinaddress,
 %frontmatterverbose, 
 %preprint,
-showpacs,preprintnumbers,
+%preprintnumbers,
 %nofootinbib,
 %nobibnotes,
 %bibnotes,
  amsmath,amssymb,
  aps,
 %pra,
-prb,
+%prb,
 %rmp,
 %prstab,
 %prstper,
 %floatfix,
-]{revtex4}
+]{revtex4-2}
 
 \usepackage{graphicx}% Include figure files
 \usepackage{dcolumn}% Align table columns on decimal point
@@ -54,908 +54,700 @@ prb,
 %%total={6.5in,8.75in}, top=1.2in, left=0.9in, includefoot,
 %%height=10in,a5paper,hmargin={3cm,0.8in},
 %]{geometry}
-\usepackage{amsmath}    % need for subequations
-\usepackage{graphicx}   % need for figures
-\usepackage{verbatim}   % useful for program listings
-\usepackage{color}      % use if color is used in text
-\usepackage{subfigure}  % use for side-by-side figures
-\usepackage{hyperref}   % use for hypertext links, including those to external documents and URLs
-\usepackage{mathrsfs}
-
 
 \begin{document}
 
-%\preprint{APS/123-QED}
+\preprint{APS/123-QED}
 
-\title{Class of scalable parallel and vectorizable pseudorandom number generators based on non-cryptographic RSA exponentiation ciphers}% Force line breaks with \\
-%\thanks{A footnote to the article title}%
+\title{Manuscript Title:\\with Forced Linebreak}% Force line breaks with \\
+\thanks{A footnote to the article title}%
 
-\author{Jetanat Datephanyawat}
-\author{Paul D. Beale}
-\email{paul.beale@colorado.edu}
+\author{Ann Author}
+ \altaffiliation[Also at ]{Physics Department, XYZ University.}%Lines break automatically or can be forced with \\
+\author{Second Author}%
+ \email{Second.Author@institution.edu}
 \affiliation{%
-University of Colorado Boulder 
+ Authors' institution and/or address\\
+ This line break forced with \textbackslash\textbackslash
 }%
+
+\collaboration{MUSO Collaboration}%\noaffiliation
+
+\author{Charlie Author}
+ \homepage{http://www.Second.institution.edu/~Charlie.Author}
+\affiliation{
+ Second institution and/or address\\
+ This line break forced% with \\
+}%
+\affiliation{
+ Third institution, the second for Charlie Author
+}%
+\author{Delta Author}
+\affiliation{%
+ Authors' institution and/or address\\
+ This line break forced with \textbackslash\textbackslash
+}%
+
+\collaboration{CLEO Collaboration}%\noaffiliation
 
 \date{\today}% It is always \today, today,
              %  but any date may be explicitly specified
 
 \begin{abstract}
-Parallel supercomputer-based Monte Carlo and stochastic simulatons require pseudorandom number generators that can produce distinct pseudorandom streams across many independent processes. 
-We propose a scalable class of parallel and vectorizable pseudorandom number generators  based on a non-cryptographic version of the RSA public-key exponentiation cipher. 
-Our method generates uniformly distributed IEEE double precision floating point pseudorandom sequences by encrypting pseudorandom sequences of 64-bit integer messages by modular exponentiation.  
-The advantages of the method are:  the method is parallelizable by parameterization with each pseudorandom number generator instance derived from an independent composite modulus, the method is fully scalable on massively parallel computing clusters because of the millions of 32-bit prime numbers, the seeding and initialization of the independent streams is simple, the periods of the independent instances are all different and greater than  $8.5\times 10^{37}$, 
-and the method passes a battery of intrastream and interstream correlation tests. The calculations in each instance can be vectorized. and can produce more than $10^8$ pseudorandom numbers per second on each multicore CPU.
-%Due the parallelizibility of the algorithm, each instance can produce hundreds of millions of pseudorandom numbers per second on each node of a modern multi-core supercomputer.
+An article usually includes an abstract, a concise summary of the work
+covered at length in the main body of the article. 
+\begin{description}
+\item[Usage]
+Secondary publications and information retrieval purposes.
+\item[Structure]
+You may use the \texttt{description} environment to structure your abstract;
+use the optional argument of the \verb+\item+ command to give the category of each item. 
+\end{description}
 \end{abstract}
 
-\pacs{%Valid PACS appear here
-02.70.-c,
-05.10.-a, 
-05.10.Gg,
-05.10.Ln, 
-05.40.-a,
-07.05.Tp,
-95.75.Wx
-}% PACS, the Physics and Astronomy
-                            % Classification Scheme.
 %\keywords{Suggested keywords}%Use showkeys class option if keyword
                               %display desired
 \maketitle
 
 %\tableofcontents
 
-\section{\label{sec:Introduction}Introduction}
+\section{\label{sec:level1}First-level heading:\protect\\ The line
+break was forced \lowercase{via} \textbackslash\textbackslash}
 
-Parallel supercomputer-based Monte Carlo and stochastic simulatons require pseudorandom number generators that can produce distinct pseudorandom streams across many independent processes. 
-We have developed a new class of scalable parallel and vectorizable pseudorandom number generators 
-for use in massively parallel supercomputer applications. The method we propose is
-based on a non-cryptographic version of the Rivest, Shamir and Adleman (RSA) public key exponentiation cipher.\cite{rsa1978, FergusonSchneierKohno2010,Schneier1994, Koshy2002, Silverman2006, Koblitz1987} 
-The method creates pseudorandom streams by encrypting sequences of 64-bit integer plaintext \textit{messages} $m_k$ into \textit{ciphertexts} $c_k$ using the transformation 
-\begin{align}\label{eqn:encrypt2}
-c_k&= m_k^e \thinspace\textrm{mod}\thinspace  n .
-\end{align}
-Each generator instance is based on an independent composite modulus $n=p_1 p_2$, where $p_1$ and $p_2$ are 32-bit safe primes, and the exponent $e$ is a small odd number.  
-Here and throughout, $x=y \thinspace\textrm{mod}\thinspace z$ means $x$ is the remainder of $y$ upon division by $z$,  with $0 \leq x < z$.
-This is \textit{not} a cryptographically secure pseudorandom generator, which would need to operate on integers that are thousands of bits long. The algorithm is fully scalable by parametrization on parallel supercomputers since each node can be assigned independent pairs of primes. The algorithm is vectorizable, and can generate more than $10^8$ pseudorandom numbers per second on each multicore supercomputer node.
+This sample document demonstrates proper use of REV\TeX~4.2 (and
+\LaTeXe) in mansucripts prepared for submission to APS
+journals. Further information can be found in the REV\TeX~4.2
+documentation included in the distribution or available at
+\url{http://journals.aps.org/revtex/}.
 
-The pseudorandom number generator algorithm described here cycles through a sequence of integer messages $m_k$ with $k=0,1,2,\ldots$ uniformly selected from $\mathbb{Z}_n=[0\thinspace . \thinspace . \thinspace n-1]$. The encryption step in equation \eqref{eqn:encrypt2} then gives a 
-sequence of pseudorandom ciphertexts $c_k$ that is uniformly distributed on $\mathbb{Z}_n$. Uniformly distributed double precision floating point pseudorandom numbers $r_k$ on the real interval $[0 \thinspace ,\thinspace 1)$ are formed with a floating point division: $r_k= c_k / n$. 
-Since $(a b c)  \thinspace\textrm{mod}\thinspace  n = \left( a\thinspace (bc \thinspace\textrm{mod}\thinspace  n)\right)\thinspace\textrm{mod}\thinspace  n$, repeated squaring and multiplying can be used to evaluate the exponentiation \eqref{eqn:encrypt2} with less than $2 \log_2 e$ modular multiplications on $\mathbb{Z}_n$.
+When commands are referred to in this example file, they are always
+shown with their required arguments, using normal \TeX{} format. In
+this format, \verb+#1+, \verb+#2+, etc. stand for required
+author-supplied arguments to commands. For example, in
+\verb+\section{#1}+ the \verb+#1+ stands for the title text of the
+author's section heading, and in \verb+\title{#1}+ the \verb+#1+
+stands for the title text of the paper.
 
-Most pseudorandom number generators generate the next pseudorandom integer from either the previous pseudorandom integer in the sequence, or by operating on two or more pseudorandom integers from earlier in the sequence. In our method, the pseudorandom sequence arises from the encryption of a  sequence of integer messages. In this way, it is similar to cryptographically secure pseudorandom number generators,\cite{Schneier1994, FergusonSchneierKohno2010} and pseudorandom number generators based on block ciphers.\cite{NumericalRecipes1992,Rijmen,Random123,U01Test} The quality of the pseudorandom sequence produced by our method is based on modular exponentiation being a good one-way cryptographic function. \cite{rsa1978, Schneier1994, FergusonSchneierKohno2010,Shparlinski2000} 
+Line breaks in section headings at all levels can be introduced using
+\textbackslash\textbackslash. A blank input line tells \TeX\ that the
+paragraph has ended. Note that top-level section headings are
+automatically uppercased. If a specific letter or word should appear in
+lowercase instead, you must escape it using \verb+\lowercase{#1}+ as
+in the word ``via'' above.
 
-Large-scale parallel programs that use pseudorandom numbers should utilize an algorithm that is scalably parallel. Otherwise, different processes risk sampling overlapping pseudorandom subsequences which would give results that are not statistically independent. 
-Coddington\cite{Coddington} recommends parallel pseudorandom number generators should have the following characteristics (paraphrased here):
-\begin{itemize}
+\subsection{\label{sec:level2}Second-level heading: Formatting}
 
-\item The method should produce uncorrelated pseudorandom numbers in any number processes, and pass a battery of stringent tests of randomness within each process and between processes.
+This file may be formatted in either the \texttt{preprint} or
+\texttt{reprint} style. \texttt{reprint} format mimics final journal output. 
+Either format may be used for submission purposes. \texttt{letter} sized paper should
+be used when submitting to APS journals.
 
-\item The algorithm should have a provably long period that is far longer than a single process can exhaust in any conceivable run.
+\subsubsection{Wide text (A level-3 head)}
+The \texttt{widetext} environment will make the text the width of the
+full page, as on page~\pageref{eq:wideeq}. (Note the use the
+\verb+\pageref{#1}+ command to refer to the page number.) 
+\paragraph{Note (Fourth-level head is run in)}
+The width-changing commands only take effect in two-column formatting. 
+There is no effect if text is in a single column.
 
-\item The method should be able to create one instance, or a scalably large number of independent instances.
+\subsection{\label{sec:citeref}Citations and References}
+A citation in text uses the command \verb+\cite{#1}+ or
+\verb+\onlinecite{#1}+ and refers to an entry in the bibliography. 
+An entry in the bibliography is a reference to another document.
 
-\item  To assist in debugging, the user should be able to seed the algorithm to give independent reproducible results in any number of processes
+\subsubsection{Citations}
+Because REV\TeX\ uses the \verb+natbib+ package of Patrick Daly, 
+the entire repertoire of commands in that package are available for your document;
+see the \verb+natbib+ documentation for further details. Please note that
+REV\TeX\ requires version 8.31a or later of \verb+natbib+.
 
-\item The code should be portable across wide range of computer architectures.
+\paragraph{Syntax}
+The argument of \verb+\cite+ may be a single \emph{key}, 
+or may consist of a comma-separated list of keys.
+The citation \emph{key} may contain 
+letters, numbers, the dash (-) character, or the period (.) character. 
+New with natbib 8.3 is an extension to the syntax that allows for 
+a star (*) form and two optional arguments on the citation key itself.
+The syntax of the \verb+\cite+ command is thus (informally stated)
+\begin{quotation}\flushleft\leftskip1em
+\verb+\cite+ \verb+{+ \emph{key} \verb+}+, or\\
+\verb+\cite+ \verb+{+ \emph{optarg+key} \verb+}+, or\\
+\verb+\cite+ \verb+{+ \emph{optarg+key} \verb+,+ \emph{optarg+key}\ldots \verb+}+,
+\end{quotation}\noindent
+where \emph{optarg+key} signifies 
+\begin{quotation}\flushleft\leftskip1em
+\emph{key}, or\\
+\texttt{*}\emph{key}, or\\
+\texttt{[}\emph{pre}\texttt{]}\emph{key}, or\\
+\texttt{[}\emph{pre}\texttt{]}\texttt{[}\emph{post}\texttt{]}\emph{key}, or even\\
+\texttt{*}\texttt{[}\emph{pre}\texttt{]}\texttt{[}\emph{post}\texttt{]}\emph{key}.
+\end{quotation}\noindent
+where \emph{pre} and \emph{post} is whatever text you wish to place 
+at the beginning and end, respectively, of the bibliographic reference
+(see Ref.~[\onlinecite{witten2001}] and the two under Ref.~[\onlinecite{feyn54}]).
+(Keep in mind that no automatic space or punctuation is applied.)
+It is highly recommended that you put the entire \emph{pre} or \emph{post} portion 
+within its own set of braces, for example: 
+\verb+\cite+ \verb+{+ \texttt{[} \verb+{+\emph{text}\verb+}+\texttt{]}\emph{key}\verb+}+.
+The extra set of braces will keep \LaTeX\ out of trouble if your \emph{text} contains the comma (,) character.
 
-\item The generator should have fast initialization and execution speeds that use limited memory, and each process should run independently once initialized.
+The star (*) modifier to the \emph{key} signifies that the reference is to be 
+merged with the previous reference into a single bibliographic entry, 
+a common idiom in APS and AIP articles (see below, Ref.~[\onlinecite{epr}]). 
+When references are merged in this way, they are separated by a semicolon instead of 
+the period (full stop) that would otherwise appear.
 
-\end{itemize}
+\paragraph{Eliding repeated information}
+When a reference is merged, some of its fields may be elided: for example, 
+when the author matches that of the previous reference, it is omitted. 
+If both author and journal match, both are omitted.
+If the journal matches, but the author does not, the journal is replaced by \emph{ibid.},
+as exemplified by Ref.~[\onlinecite{epr}]. 
+These rules embody common editorial practice in APS and AIP journals and will only
+be in effect if the markup features of the APS and AIP Bib\TeX\ styles is employed.
+
+\paragraph{The options of the cite command itself}
+Please note that optional arguments to the \emph{key} change the reference in the bibliography, 
+not the citation in the body of the document. 
+For the latter, use the optional arguments of the \verb+\cite+ command itself:
+\verb+\cite+ \texttt{*}\allowbreak
+\texttt{[}\emph{pre-cite}\texttt{]}\allowbreak
+\texttt{[}\emph{post-cite}\texttt{]}\allowbreak
+\verb+{+\emph{key-list}\verb+}+.
+
+\subsubsection{Example citations}
+By default, citations are numerical\cite{Beutler1994}.
+Author-year citations are used when the journal is RMP. 
+To give a textual citation, use \verb+\onlinecite{#1}+: 
+Refs.~\onlinecite{[][{, and references therein}]witten2001,Bire82}. 
+By default, the \texttt{natbib} package automatically sorts your citations into numerical order and ``compresses'' runs of three or more consecutive numerical citations.
+REV\TeX\ provides the ability to automatically change the punctuation when switching between journal styles that provide citations in square brackets and those that use a superscript style instead. This is done through the \texttt{citeautoscript} option. For instance, the journal style \texttt{prb} automatically invokes this option because \textit{Physical 
+Review B} uses superscript-style citations. The effect is to move the punctuation, which normally comes after a citation in square brackets, to its proper position before the superscript. 
+To illustrate, we cite several together 
+\cite{[See the explanation of time travel in ]feyn54,*[The classical relativistic treatment of ][ is a relative classic]epr,witten2001,Berman1983,Davies1998,Bire82}, 
+and once again in different order (Refs.~\cite{epr,feyn54,Bire82,Berman1983,witten2001,Davies1998}). 
+Note that the citations were both compressed and sorted. Futhermore, running this sample file under the \texttt{prb} option will move the punctuation to the correct place.
+
+When the \verb+prb+ class option is used, the \verb+\cite{#1}+ command
+displays the reference's number as a superscript rather than in
+square brackets. Note that the location of the \verb+\cite{#1}+
+command should be adjusted for the reference style: the superscript
+references in \verb+prb+ style must appear after punctuation;
+otherwise the reference must appear before any punctuation. This
+sample was written for the regular (non-\texttt{prb}) citation style.
+The command \verb+\onlinecite{#1}+ in the \texttt{prb} style also
+displays the reference on the baseline.
+
+\subsubsection{References}
+A reference in the bibliography is specified by a \verb+\bibitem{#1}+ command
+with the same argument as the \verb+\cite{#1}+ command.
+\verb+\bibitem{#1}+ commands may be crafted by hand or, preferably,
+generated by Bib\TeX. 
+REV\TeX~4.2 includes Bib\TeX\ style files
+\verb+apsrev4-2.bst+, \verb+apsrmp4-2.bst+ appropriate for
+\textit{Physical Review} and \textit{Reviews of Modern Physics},
+respectively.
+
+\subsubsection{Example references}
+This sample file employs the \verb+\bibliography+ command, 
+which formats the \texttt{\jobname .bbl} file
+and specifies which bibliographic databases are to be used by Bib\TeX\ 
+(one of these should be by arXiv convention \texttt{\jobname .bib}).
+Running Bib\TeX\ (via \texttt{bibtex \jobname}) 
+after the first pass of \LaTeX\ produces the file
+\texttt{\jobname .bbl} which contains the automatically formatted
+\verb+\bibitem+ commands (including extra markup information via
+\verb+\bibinfo+ and \verb+\bibfield+ commands). 
+If not using Bib\TeX, you will have to create the \verb+thebibiliography+ environment 
+and its \verb+\bibitem+ commands by hand.
+
+Numerous examples of the use of the APS bibliographic entry types appear in the bibliography of this sample document.
+You can refer to the \texttt{\jobname .bib} file, 
+and compare its information to the formatted bibliography itself.
+
+\subsection{Footnotes}%
+Footnotes, produced using the \verb+\footnote{#1}+ command, 
+usually integrated into the bibliography alongside the other entries.
+Numerical citation styles do this%
+\footnote{Automatically placing footnotes into the bibliography requires using BibTeX to compile the bibliography.};
+author-year citation styles place the footnote at the bottom of the text column.
+Note: due to the method used to place footnotes in the bibliography, 
+\emph{you must re-run Bib\TeX\ every time you change any of your document's footnotes}. 
+
+\section{Math and Equations}
+Inline math may be typeset using the \verb+$+ delimiters. Bold math
+symbols may be achieved using the \verb+bm+ package and the
+\verb+\bm{#1}+ command it supplies. For instance, a bold $\alpha$ can
+be typeset as \verb+$\bm{\alpha}$+ giving $\bm{\alpha}$. Fraktur and
+Blackboard (or open face or double struck) characters should be
+typeset using the \verb+\mathfrak{#1}+ and \verb+\mathbb{#1}+ commands
+respectively. Both are supplied by the \texttt{amssymb} package. For
+example, \verb+$\mathbb{R}$+ gives $\mathbb{R}$ and
+\verb+$\mathfrak{G}$+ gives $\mathfrak{G}$
+
+In \LaTeX\ there are many different ways to display equations, and a
+few preferred ways are noted below. Displayed math will center by
+default. Use the class option \verb+fleqn+ to flush equations left.
+
+Below we have numbered single-line equations; this is the most common
+type of equation in \textit{Physical Review}:
+\begin{eqnarray}
+\chi_+(p)\alt{\bf [}2|{\bf p}|(|{\bf p}|+p_z){\bf ]}^{-1/2}
+\left(
+\begin{array}{c}
+|{\bf p}|+p_z\\
+px+ip_y
+\end{array}\right)\;,
+\\
+\left\{%
+ \openone234567890abc123\alpha\beta\gamma\delta1234556\alpha\beta
+ \frac{1\sum^{a}_{b}}{A^2}%
+\right\}%
+\label{eq:one}.
+\end{eqnarray}
+Note the open one in Eq.~(\ref{eq:one}).
+
+Not all numbered equations will fit within a narrow column this
+way. The equation number will move down automatically if it cannot fit
+on the same line with a one-line equation:
+\begin{equation}
+\left\{
+ ab12345678abc123456abcdef\alpha\beta\gamma\delta1234556\alpha\beta
+ \frac{1\sum^{a}_{b}}{A^2}%
+\right\}.
+\end{equation}
+
+When the \verb+\label{#1}+ command is used [cf. input for
+Eq.~(\ref{eq:one})], the equation can be referred to in text without
+knowing the equation number that \TeX\ will assign to it. Just
+use \verb+\ref{#1}+, where \verb+#1+ is the same name that used in
+the \verb+\label{#1}+ command.
+
+Unnumbered single-line equations can be typeset
+using the \verb+\[+, \verb+\]+ format:
+\[g^+g^+ \rightarrow g^+g^+g^+g^+ \dots ~,~~q^+q^+\rightarrow
+q^+g^+g^+ \dots ~. \]
 
 
-Two qualitatively different schemes have been used to create scalable systems of pseudorandom number generators: stream splitting and parameterization.\cite{BaukeMertens2007} Parallelization by stream splitting is based on a single pseudorandom number generator with an extremely long period, with parallelization accomplished by subdividing the full period into non-overlapping subsequences. %This method requires careful seeding to ensure that no two subsequences will overlap for any feasible set of processes.  
-By contrast, parallelization by parameterization produces independent pseudorandom sequences by assigning different fixed parameters to each process. 
-%The SPRNG web site\cite{MascagniSrinivasan2000,sprng} gives examples of parallel generators of both classes. 
-The most widely used classes of parallel pseudorandom number generators are based on the lagged Fibonacci method.\cite{mascagni1995a, mascagni1995b, MascagniSrinivasan2000, sprng, MersenneTwister,knuth}  
-The algorithm is usually of the form 
-$s_k = (s_{k-q} \circledcirc s_{k-r}) \thinspace\textrm{mod}\thinspace 2^m$, where $\circledcirc$ is one of the operations bitwise exclusive or, addition, subtraction, or multiplication, where  $q<r$ are integer parameters chosen based on primitive polynomials modulo 2 that implement a Galois field of order $2^r$.\cite{knuth,ZierlerBrillhart} The bitwise exclusive-or algorithms with $m=1$ have periods of $P=2^r -1$,  additive, subtractive, and word-wise exclusive-or algorithms have periods of $P=(2^r-1)2^{m-1}$, and multiplicative algorithms have periods of $P=(2^r-1)2^{m-2}$. The parameter $r$ is typically chosen in the range of several hundred to several thousand. The state of the generator is defined by a table of $r$ $m$-bit integers, which represent the most recent pseudorandom integers in the sequence. For $m>1$, parallel implementation of these algorithms can be accomplished by either stream splitting or parameterization.\cite{mascagni1995a, mascagni1995b, MascagniSrinivasan2000, sprng} %Care needs to be taken to avoid strong correlations in the initial sequence of pseudorandom numbers by tempering the initial seeding of the table.%\cite{mascagni1995a, mascagni1995b, MascagniSrinivasan2000, sprng, MersenneTwister,knuth}
+\subsection{Multiline equations}
 
-Our method is parallelized by parameterization by assigning a unique modulus $n=p_1 p_2$ to each process. 
-The number of independent streams is limited only by the number of prime pairs in the range defined by the implementation. Each independent generator can 
-vectorized by simultaneously calculating a vector of pseudorandom numbers, which greatly speeds the calculation on vector processors or multicore CPUs.
+Multiline equations are obtained by using the \verb+eqnarray+
+environment.  Use the \verb+\nonumber+ command at the end of each line
+to avoid assigning a number:
+\begin{eqnarray}
+{\cal M}=&&ig_Z^2(4E_1E_2)^{1/2}(l_i^2)^{-1}
+\delta_{\sigma_1,-\sigma_2}
+(g_{\sigma_2}^e)^2\chi_{-\sigma_2}(p_2)\nonumber\\
+&&\times
+[\epsilon_jl_i\epsilon_i]_{\sigma_1}\chi_{\sigma_1}(p_1),
+\end{eqnarray}
+\begin{eqnarray}
+\sum \vert M^{\text{viol}}_g \vert ^2&=&g^{2n-4}_S(Q^2)~N^{n-2}
+        (N^2-1)\nonumber \\
+ & &\times \left( \sum_{i<j}\right)
+  \sum_{\text{perm}}
+ \frac{1}{S_{12}}
+ \frac{1}{S_{12}}
+ \sum_\tau c^f_\tau~.
+\end{eqnarray}
+\textbf{Note:} Do not use \verb+\label{#1}+ on a line of a multiline
+equation if \verb+\nonumber+ is also used on that line. Incorrect
+cross-referencing will result. Notice the use \verb+\text{#1}+ for
+using a Roman font within a math environment.
 
-\section{\label{sec:RSA}RSA public key encryption}
+To set a multiline equation without \emph{any} equation
+numbers, use the \verb+\begin{eqnarray*}+,
+\verb+\end{eqnarray*}+ format:
+\begin{eqnarray*}
+\sum \vert M^{\text{viol}}_g \vert ^2&=&g^{2n-4}_S(Q^2)~N^{n-2}
+        (N^2-1)\\
+ & &\times \left( \sum_{i<j}\right)
+ \left(
+  \sum_{\text{perm}}\frac{1}{S_{12}S_{23}S_{n1}}
+ \right)
+ \frac{1}{S_{12}}~.
+\end{eqnarray*}
 
-Asymmetric or public-key cryptography was first publicly proposed Ralph Merkle.\cite{Merkle1978} 
-Whitfield Diffie and Martin Hellman\cite{DiffieHellman1976} were the first to publish a practical algorithm for key exchange based on modular exponentiation in a prime field, and Ron Rivest, Adi Shamir and Leonard Adleman\cite{rsa1978} published their public key cryptosystem paper in 1978. (It is important to note that all of these methods were discovered earlier by British GCHQ mathematicians in highly classified work: James Ellis proposed the idea of asymmetric ciphers, or what he called \textit{non-secret encryption}, Malcolm Williamson developed a key exchange method identical to Diffie--Hellman, and Clifford Cocks developed a version of the RSA algorithm. These discoveries were not revealed publicly until their work was declassified in 1997.\cite{SinghCodeBook})
+To obtain numbers not normally produced by the automatic numbering,
+use the \verb+\tag{#1}+ command, where \verb+#1+ is the desired
+equation number. For example, to get an equation number of
+(\ref{eq:mynum}),
+\begin{equation}
+g^+g^+ \rightarrow g^+g^+g^+g^+ \dots ~,~~q^+q^+\rightarrow
+q^+g^+g^+ \dots ~. \tag{2.6$'$}\label{eq:mynum}
+\end{equation}
 
+\paragraph{A few notes on \texttt{tag}s} 
+\verb+\tag{#1}+ requires the \texttt{amsmath} package. 
+Place the \verb+\tag{#1}+ command before the \verb+\label{#1}+, if any. 
+The numbering produced by \verb+\tag{#1}+ \textit{does not affect} 
+the automatic numbering in REV\TeX; 
+therefore, the number must be known ahead of time, 
+and it must be manually adjusted if other equations are added. 
+\verb+\tag{#1}+ works with both single-line and multiline equations. 
+\verb+\tag{#1}+ should only be used in exceptional cases---%
+do not use it to number many equations in your paper. 
+Please note that this feature of the \texttt{amsmath} package
+is \emph{not} compatible with the \texttt{hyperref} (6.77u) package.
 
-
-
-\begin{comment}
-primes 98182656 
-
-primes with (p-1) mod 3 !=0:  49091941 
-
-primes with (p-1) mod 17 !=0: 92045560 
-
-primes with (p-1) mod 3 and (p-1) mod 17 !=0: 46023267
-
-safe primes (p-1)/2 prime: 3,060,794 
-\end{comment}
-
-Our generator mimics the manner that RSA is used in practice to establish a secure communications channel between Alice and Bob.\cite{FergusonSchneierKohno2010}  
-%In order to establish secure communications session, Alice and Bob need to share a secret private key $K$, i.e. a large random number known only to them. They will use this key in a fast symmetric cipher to encrypt and decrypt all messages exchanged during the session. Since Alice and Bob do not want to meet to exchange the key, they need to share the key over an open communications channel while keeping the key secret. 
-Alice wants to send an encrypted message to Bob even though they have never met to securely exchange a secret symmetric encryption/decryption key. %Alice looks up Bob's public key $n$ and $e$. 
-Bob first creates a public key consisting of a composite number $n=p_1 p_2$ where $p_1$ and $p_2$ are two large secret prime numbers. Bob publicly shares the product $n$ and a small exponent $e$ that is coprime to $p_1-1$ and $p_2-1$. Alice uses Bob's public key to encrypt her message $m$ into ciphertext $c=m^e\thinspace\textrm{mod}\thinspace n$, and sends the ciphertext to Bob over an open channel. Bob can decrypt the ciphertext using $m=c^d \thinspace\textrm{mod}\thinspace n$, where Bob's decryption exponent $d$ can be determined from $e$ and the two secret primes.
-%$d=e^{-1} \thinspace\textrm{mod}\thinspace t$, where $t=\textrm{lcd}(p_1-1,p_2-1)= (p_1-1)(p_2-1)/\textrm{gcd}(p_1-1,p_2-1)$. 
-%Since only Bob has the secret trap door knowledge of $p_1$ and $p_2$, only he can easily decode the message. 
-RSA is usually used to securely share a secret symmetric key $K$. Alice encrypts a random key $K$ using Bob's public key, and sends the ciphertext to Bob who  decrypts the key. Both Alice and Bob can then use their shared secret key $K$ in a fast symmetric encryption algorithm.
-%by using the same cryptographic hash function $K=h(m)$, which securely shortens the random message $m$ into a key of the correct length for their symmetric cipher. 
-
-Alice and Bob assume that an eavesdropper Eve will be able to intercept the ciphertext $c$. The security of RSA is based on both modular exponentiation mod $n$, and multiplying $p_1$ and $p_2$ to determine $n$ are both good one-way functions, i.e. multiplying and exponentiating are easy, while factoring and solving the discrete logarithm problem are hard.\cite{FergusonSchneierKohno2010,Schneier1994,Koshy2002,Silverman2006} 
-\textit{Easy} and \textit{hard} are distinguished by whether or not a function can be calculated 
-in a time proportional to a power of $\log_2 n$ (\textit{polynomial time}).
-Cryptographic security currently requires that $n$ should be thousands of bits long. %Not even Alice can decrypt the ciphertext once $m$ is encrypted. 
-%Bob's trap door knowledge of $p_1$ and $p_2$ allows 
-%Bob to easily determine the decryption exponent $d$, while eavesdropper Eve would need to factor $n$ to determine the prime factors. 
-%Factoring $n$ into $p_1$ and $p_2$ is computationally \textit{hard} since 
-No known classical algorithm can factor a large composite or calculate a discrete logarithm in a polynomial time. It is these problems that a successful quantum computer with thousands of qubits could potentially crack.\cite{Shor} 
-  %We have empirical evidence that primes $p$ where $p-1$ is composed only of small factors can give poor pseudorandom sequences. 
-
-%Cryptography theory suggests suggests choosing $p_1$ and $p_2$ from the set of safe primes i.e. primes $p$ for which $(p-1)/2$ is also prime.\cite{PohligHellman1978, PatelSundaram, Schneier1994, SophieGermain} Using safe primes does not seriously limit the scalability of our pseudorandom number generator since there are 3,060,794 safe primes in the range $[2^{31}  . \thinspace . \thinspace \thinspace 2^{32}]$.\cite{http://oeis.org/A211395} 
-
-
-%This helps ensure eavesdroppers will find it computationally difficult to take the discrete logarithm to recover the message from the ciphertext.\cite{PohligHellman1978, Koshy2002, Silverman2006, Koblitz1987}
-%Cryptography theory suggests that primes $p$ where $p-1$ is the product of only small primes should be avoided in exponentiation ciphers. This can be avoided if primes $p_1$ and $p_2$ are chosen from the set of safe primes, i.e. primes $p$ where $(p-1)/2$ is also prime. (This means that $(p-1)/2$ is a Sophie-Germain prime.)
-
-
-\section{\label{sec:Mathematics}Number Theory}
-
-%modular arithmetic, prime fields, $\mathbb{Z}_n$ CRT
-
-
-%RSA is based on the properties of prime numbers.\cite{Koshy2002, Silverman2006, Koblitz1987}  
-For every prime number $p$, the set of integers $\mathbb{Z}_p = [0 \thinspace . \thinspace . \thinspace p-1]$ forms a finite field, i.e. $\mathbb{Z}_p$ is closed under addition and subtraction modulo $p$, and the set of nonzero elements $\mathbb{Z}_p^*= [1 \thinspace . \thinspace . \thinspace p-1]$ forms a group that is closed under multiplication and division modulo $p$.  Division is defined since for every integer $a\in\mathbb{Z}_p^*$ there exists a unique multiplicative inverse $a^{-1}\in\mathbb{Z}_p^*$ such that $a a^{-1}\thinspace\textrm{mod}\thinspace  p = 1$ . %The set $\mathbb{Z}_n= [0\thinspace . \thinspace . \thinspace n-1]$ with $n=p_1 p_2$ forms a ring which is closed under addition, subtraction, and multiplication modulo $n$, but not division.
-
-%To demonstrate the relation to encryption and to explain some of the useful properties of the method, t
-The message $m$ can be decrypted from the ciphertext $c$ using a decryption exponent $d$:\cite{rsa1978, Schneier1994, Koshy2002, Silverman2006, Koblitz1987}
-\begin{align}\label{eqn:decrypt}
-c&= m^d \thinspace\textrm{mod}\thinspace  n .
-\end{align}
-The decryption exponent $d$ exists and is unique if $e$ and $(p_1-1)(p_2-1)$ are co-prime. 
-Decryption is based on Fermat's little theorem:\cite{Koshy2002, Silverman2006, Koblitz1987} 
-for any prime $p$ and for all $m \in \mathbb{Z}_p^*$, $m^{p-1}\thinspace\textrm{mod}\thinspace p= 1$. 
-For the case of composite moduli of the form $n=p_1 p_2$, 
-the generalization of Fermat's little theorem is for all $m$ co-prime to $n$, $m^{\phi(n)} \thinspace \textrm{mod} \thinspace n = 1$, where $\phi(n)=(p_1-1)(p_2-1)$ is Euler's totient function, the number of elements in $\mathbb{Z}_n^*$ that are coprime to $n$.
-%The exponent has the value $t=\lambda(n)$, where $\lambda(n)$ is Carmichael's totient function is the smallest integer such that $m^t\thinspace\textrm{mod}\thinspace n=1$ for all $m$ co-prime to $n$. For the case of $n=p_1 p_2$ with $p_1$ and $p_2$ being distinct odd primes, $\lambda(n)=(p_1-1)(p_2-1)/\textrm{gcd}(p_1-1,p_2-1)$ is the lowest common denominator of $p_1-1$ and $p_2-1$.
-The decryption exponent is given by 
-\begin{align}\label{eqn:RSAd}
-d=e^{-1} \thinspace \textrm{mod} \thinspace \phi(n) = e^{-1} \thinspace \textrm{mod} \thinspace (p_1-1)(p_2-1) ,
-\end{align}
-and can be calculated using the extended Euclidean algorithm 
-by anyone who knows $e$, $p_1$ and $p_2$.\cite{Schneier1994, Koshy2002, Silverman2006, Koblitz1987,CarmichaelTotient}  
-The validity of equation \eqref{eqn:decrypt} is demonstrated as follows:
-\begin{align}\label{eqn:decryptproof}
-c^d \thinspace \textrm{mod} \thinspace n = m^{d e} \thinspace \textrm{mod} \thinspace n =
-m^{1+u {\phi(n)}} \thinspace \textrm{mod} \thinspace n =
-(m (m^{\phi(n)})^u) \thinspace \textrm{mod} \thinspace n =
-m \thinspace \textrm{mod} \thinspace n = m.
-\end{align}
-The decryption in equation \eqref{eqn:decrypt} works for all $c \in \mathbb{Z}_n$.
-Encryption and decryption are 
-%equation \eqref{eqn:encrypt2} is a 
-one-to-one mappings of $\mathbb{Z}_n$ onto the same set, so any message sequence 
-$\{m_k\}$ that uniformly samples $\mathbb{Z}_n$ will produce a ciphertext sequence $\{c_k\}$ that uniformly samples $\mathbb{Z}_n$. 
-
-The Chinese remainder theorem (CRT)\cite{FergusonSchneierKohno2010,Schneier1994,Koshy2002,Silverman2006,Koblitz1987}
-is used to speed up the modular exponentiations modulo $n$ in RSA cryptographic applications. Every integer $m \in \mathbb{Z}_n$ with $n=p_1 p_2$ can be uniquely represented in terms of two numbers $m_1\in \mathbb{Z}_{p_1}$ and $m_2\in \mathbb{Z}_{p_2}$ given by
+Enclosing display math within
+\verb+\begin{subequations}+ and \verb+\end{subequations}+ will produce
+a set of equations that are labeled with letters, as shown in
+Eqs.~(\ref{subeq:1}) and (\ref{subeq:2}) below.
+You may include any number of single-line and multiline equations,
+although it is probably not a good idea to follow one display math
+directly after another.
 \begin{subequations}
-\begin{align}
-&m_1=m \thinspace\textrm{mod}\thinspace p_1 ,\\ 
-&m_2=m \thinspace\textrm{mod}\thinspace p_2,
-\end{align}
+\label{eq:whole}
+\begin{eqnarray}
+{\cal M}=&&ig_Z^2(4E_1E_2)^{1/2}(l_i^2)^{-1}
+(g_{\sigma_2}^e)^2\chi_{-\sigma_2}(p_2)\nonumber\\
+&&\times
+[\epsilon_i]_{\sigma_1}\chi_{\sigma_1}(p_1).\label{subeq:2}
+\end{eqnarray}
+\begin{equation}
+\left\{
+ abc123456abcdef\alpha\beta\gamma\delta1234556\alpha\beta
+ \frac{1\sum^{a}_{b}}{A^2}
+\right\},\label{subeq:1}
+\end{equation}
 \end{subequations}
-and the value of $m$ can be recovered from $m_1$ and $m_2$ using Garner's formula:
-\begin{align}
-m =  (((m_1 - m_2) (p_2^{-1}\thinspace\textrm{mod}\thinspace p_1)) \thinspace\textrm{mod}\thinspace p_1 ) p_2 + m_2.
-\end{align}
-%The quantity $p_2^{-1}\thinspace\textrm{mod}\thinspace p_1$ can be pre-calculated using the Extended Euclidean algorithm. 
-%Since $p_1$ and $p_2$ are known in our algorithm, 
-The exponentiation $c=m^e\thinspace\textrm{mod}\thinspace n$ can then be accomplished by calculating $c_1 = c \thinspace\textrm{mod}\thinspace p_1$ and $c_2 = c \thinspace\textrm{mod}\thinspace p_2$  by exponentiating $m_1$ and $m_2$: %The Chinese remainder theorem representation of $c$ is given by 
-\begin{subequations}
-\begin{align}
-c_1& = m_1^e \thinspace\textrm{mod}\thinspace p_1 ,\\
-c_2& = m_2^e \thinspace\textrm{mod}\thinspace p_2 ,\\
-c &=  (((c_1 - c_2) (p_2^{-1}\thinspace\textrm{mod}\thinspace p_1)) \thinspace\textrm{mod}\thinspace p_1 ) p_2 +c_2.
-\end{align}
-\end{subequations}
-Since we choose $p_1$ and $p_2$ to be 32-bit primes, the exponentiations can be accomplished using native 64-bit arithmetic. In RSA cryptographic applications, this CRT-based speedup can only be used in the decryption step, since only Bob knows $p_1$ and $p_2$.
-
-%This is the basis of our pseudorandom number generator.
-%The Pohlig--Hellman algorithm is closely related to the much more widely used RSA public key encryption method\cite{Schneier1994, Koshy2002, Silverman2006, Koblitz1987, FergusonSchneierKohno2010, rsa1978} which uses moduli that are products of two large primes. Using a composite modulus $n=p q$ could create a potential weakness for this application since every message $m$ that is a multiple of $p$ or $q$ gives a ciphertext $c$ that is also a multiple of $p$ or $q$, respectively.
- 
-%In the RSA  cryptographic system, the key consisting of primes $p_1$ and $p_2$ are kept private, while the composite $n=p_1 p_2$ and the exponent $e$ can be shared publicly. For cryptographic applications, the primes $p_1$ ad $p_2$ are each hundreds of digits long so that any eavesdropper will find it computationally difficult to factor the public composite $n$ and determine the decryption exponent $d$. The process for securely exchanging a message $m$ is as follows: Alice uses Bob's public key $n$ and $e$, and encrypts her message using $c= m^e \thinspace\textrm{mod}\thinspace  n$. Alice can then transmit the encrypted message over an open channel to Bob. Bob uses his private knowledge of $p_1$ and $p_2$ to decrypt the message using the decryption exponent $d$ using $m= c^d \thinspace\textrm{mod}\thinspace  n$. Eavesdropper Eve can not decrypt the message since she would need to factor $n$ into $p_1$ and $p_2$ to calculate the decryption exponent. This is computationally difficult if $n$ is several thousand bits long.
-%Otherwise, an eavesdropper can feasibly determine the decryption exponent. 
-%Cryptography theory suggests using safe primes for the moduli, i.e.~primes $n$ for which $(n-1)/2$ is also prime.\cite{PohligHellman1978, PatelSundaram, Schneier1994, SophieGermain} This helps ensure eavesdroppers will find it computationally difficult to take the discrete logarithm to recover the message from the ciphertext.\cite{PohligHellman1978, Koshy2002, Silverman2006, Koblitz1987} While our empirical tests do not give noticeably better statistics for safe primes than for primes in general, the number of safe primes does not seriously limit the scaling with 32-bit moduli since there are 3,060,794 safe primes in the range $[2^{31}  . \thinspace . \thinspace \thinspace 2^{32}]$.\cite{http://oeis.org/A211395} 
-%The algorithm presented here is similar to a block cipher operating in the counter mode which outputs a sequence of pseudorandom numbers that are ciphertexts resulting from a simple sequence of plaintexts.\cite{Schneier1994, FergusonSchneierKohno2010} 
-%The RSA method can be used to generate cryptographically secure pseudorandom sequences, but cryptographic applications require primes with hundreds of digits.\cite{PohligHellman1978, Schneier1994, Koshy2002, Silverman2006, Koblitz1987, FergusonSchneierKohno2010, BlumMichali, PatelSundaram}  
-
-
-
-
-\section{\label{sec:PseudorandomSkips}Pseudorandom skips}
-
-The sequence of messages to be encrypted can be expressed in terms of an integer skip sequence  $\{s_k\}$ 
-chosen from $\mathbb{Z}_n$:
-%\begin{subequations}\label{basealgorithm}
-\begin{align}
-m_k&= (m_{k-1}+s_k) \thinspace\textrm{mod}\thinspace n,%\\
-%c_k &= m_k^e \thinspace\textrm{mod}\thinspace n .
-%R_k &= (c_k+1)/ (n+1) .
-\end{align}
-%\end{subequations}
-Note that if the skip sequence uniformly and \textit{randomly} (not pseudorandomly) samples $\mathbb{Z}_n$, then the sequence of messages $m_k$ forms a uniform random sequence on $\mathbb{Z}_n$. Each message is, in effect, a one-time pad encryption of the previous message.\cite{Schneier1994}  %Since the ciphertexts are a one-to-one mapping of the messages, the sequence of ciphertexts $\{c_k\}$ would also form a uniform random sequence on $\mathbb{Z}_n$. 
-We will approximate this by choosing the skips $s_k$ pseudorandomly. 
-
-In encryption it is essential to avoid \textit{cribs}, i.e. messages that result in easily decoded ciphertexts. For example, the messages $m=0,1,n-1$ are cribs for all allowed exponents $e$ since $m^e \thinspace\textrm{mod}\thinspace n = 0,1,n-1$, respectively. 
-%Calculation efficiency makes it desirable to use small exponents to reduce the number of multiply--mod operations needed to generate each pseudorandom number. 
-RSA-based cryptographic applications often use encryption exponents as small as $e=3,5$ for efficiency.\cite{FergusonSchneierKohno2010} Messages with $m^e < n$ and $(n-m)^e < n$ result in trivially decodable ciphertexts, so exponents $e < \log_2 n$ result in additional cribs. 
-In cryptographic applications, messages are randomly padded\cite{Schneier1994, FergusonSchneierKohno2010} 
-to avoid cribs. 
-%For our application, eliminating cribs close to $0$ or $n$ from the message stream would bias the uniform distribution of ciphertexts, % due to the elimination of ciphertexts formed from messages with $m^e < p$ and $(p-m)^e < p$,and would result in a small but systematic under-sampling of small and large values of $c$. 
-%Even though the effect of this is small, we choose not to implement an algorithm that does not give a uniform distribution of ciphertexts over the full period. 
-For our purposes, it is not necessary to eliminate cribs, since they would appear in any long random sequence of messages, but rather to prevent correlated sequences of cribs.
-Our goal is to select a simple skip pattern that ensures a uniform sampling of the set of all messages, avoids correlated cribs, is computationally fast, has a long period, and allows the use of small encryption exponents. 
-%We accomplish this by using a pseudorandom skip sequence.% that, over the full period of the generator, uniformly samples all messages in $\mathbb{Z}_n$. %But first, let's examine the properties of pseudorandom ciphertext sequences derived from simpler skip patterns.
-
-
-
-The simplest skip sequence that uniformly samples $\mathbb{Z}_n$ is the unit skip, i.e. $s_k = 1$ for all $k$. Encryption of this sequence gives a block cipher operating in counter mode 
-which is used in some cryptographically secure pseudorandom number generators.\cite{Schneier1994,FergusonSchneierKohno2010} 
-The message sequence is $m_k=(m_0 + k) \thinspace\textrm{mod}\thinspace n$, with period $P=n$. %For 32-bit moduli, one can easily test the full period of the generator. 
-In spite of the cribs near $m=0$ and $n$, pseudorandom sequences derived from a unit skip  %the U01 statistical tests for randomness even for small exponents. %Naturally, the full-period sequence produces a perfectly uniform one-dimensional distribution since after $p$ steps every value $c$ will appear once, and only once, in the sequence. Except for the one-dimensional frequency test, and other tests that are affected by the uniformity of the sampling of integers in $\mathbb{Z}_p$, 
-empirically pass the U01 battery of statistical correlations tests\cite{U01Test} for exponents $e \geq 9$.
-% in which a block cipher is operated in counter mode.\cite{FergusonSchneierKohno2010,Schneier1994}
- %By comparison, all linear congruential generators fail \textit{all} $D$-dimensional correlations tests once a substantial fraction of the period has been exhausted, due the the uniform $D$-dimensional lattice structure produced by all congruential generators.\cite{knuth}
-%since all $D$-dimensional histograms become uniform as the period of the generator is approached.\cite{knuth} 
-%The exponentiation cipher does not suffer from this defect; 
-%see figures 1 and 2 which display the two-dimensional correlation patterns for a prime number linear congruential generator, and a unit-skip generator using the same prime modulus. 
-%As with most pseudorandom number generators, there is a symmetry in the pseudorandom sequence. The exponentiation cipher has the symmetry 
-%\begin{align*}
-%(n-m)^e \thinspace\textrm{mod}\thinspace n=n - m^e \thinspace\textrm{mod}\thinspace n ,
-%\end{align*} 
-%i.e. the ciphertexts derived from messages in $[(p+1)/2\thinspace .\thinspace .\thinspace (p-1)]$ are strongly correlated with the messages in $[1\thinspace .\thinspace .\thinspace (p-1)/2]$, but in reverse order.
-A constant skip $s_k = b$ with $1<b<n-1$, can eliminate sequential cribs. 
-but
-the pattern produced by constant skips is not substantially better than 
-the unit skip pattern since 
-\begin{align}\label{constantskipsymmetry}
-(kb)^e\thinspace\textrm{mod}\thinspace n=\left( (b^e \thinspace\textrm{mod}\thinspace n)(k^e \thinspace\textrm{mod}\thinspace n)\right) \thinspace\textrm{mod}\thinspace n,
-\end{align}
-is just a constant multiplier permutation of the unit skip sequence. %except for a constant multiplier $b^e \thinspace\textrm{mod}\thinspace p$ which permutes the unit skip sequence. The constant skip message pattern is important for understanding long-range correlations in the pseudorandom skip algorithm discussed next. 
-
-We choose a skip sequence produced by a prime number linear congruential pseudorandom number 
-generator:\cite{knuth,lecuyer1988,LecuyerBlouinCouture1993,SezginSezgin2013}
-\begin{align}\label{congruentialgenerator1}
-s_k= a s_{k-1} \thinspace\textrm{mod}\thinspace q= s_0 a^k \thinspace\textrm{mod}\thinspace q ,
-\end{align}
-with prime modulus $q$. The multiplier $a$ is chosen to be a primitive root $\textrm{mod}\thinspace q$\cite{Koshy2002, Silverman2006, Koblitz1987} that  
-delivers a full period, well-tested
-pseudorandom sequence.
-The period of the skip generator is $q-1$ since every skip in $Z_q^*$ will appear once and only once before the skip sequence repeats. 
-If $n$ is co-prime to $q$ and $q-1$, message/skip sequence does not begin to repeat until after period $P=(q-1)n$ steps.
-%This results in a uniform sampling of messages in $\mathbb{Z}_n$ over the full period since each message $m\in \mathbb{Z}_n$, and hence each ciphertext $c\in \mathbb{Z}_n$ is sampled exactly $q-1$ times over the full period.
-%This closely mimics how RSA is used in practice in public key cryptography to create a fast encrypted channel.  A random encryption key for a separate block cipher is exchanged by encrypting a random key produced by the sender using the receiver's public RSA key $n$ and $e$. Once the receiver decrypts the random key, both Alice and Bob can encrypt and decrypt messages using a faster symmetric block cipher. 
-%This gives pseudorandom skips $s_k$ in the range $(\mathbb{Z}/p\mathbb{Z})^*$, with the period of the skip sequence being $p-1$.
-%We can derive a closed form expression for the $k$-th pseudorandom ciphertext in the sequence and demonstrate that the period of the generator is $P=(q-1)n$. 
-Since $a$ is  
-a primitive root mod $q$, after $q-1$ steps $s_k$ will have cycled through every value in $\mathbb{Z}_q^*$, so $s_{k+q-1}=s_k$ and $m_{k+q-1}=\left( m_k + \sum_{s=1}^{q-1}{s} \right) \thinspace\textrm{mod}\thinspace n = ( m_k + q(q-1)/2 ) \thinspace\textrm{mod}\thinspace n$.  
-If $\textrm{gcd}(q(q-1)/2,n)=1$, then $b=q(q-1)/2 \thinspace\textrm{mod}\thinspace n \neq 0$.
-%the sequence of messages separated by multiples of $q-1$ steps in the sequence differ by a constant skip $b=q(q-1)/2 \thinspace\textrm{mod}\thinspace q$. If $\gcd(q(q-1)/2,n)=1$, then the skip and 
-Therefore the skip and message values shifted forward by $(q-1)u$ steps are given by 
-$s_{k+(q-1)u}=s_k$ and $m_{k+(q-1)u}=(m_k+ub)\thinspace\textrm{mod}\thinspace n$. Therefore, every subsequence of messages of length $q-1$ is different from every other subsequence. 
-Since  $s_{k+(q-1)n}=s_k$ and $m_{k+(q-1)n}=m_k$, the period of the generator is $P=(q-1)n$. 
-%This results in a uniform sampling of messages in $\mathbb{Z}_n$. %Over the full period, each message $m\in \mathbb{Z}_n$, and hence each ciphertext $c\in \mathbb{Z}_n$ will be  sampled exactly $q-1$ times.
-%Over the full period, every ciphertext in $\mathbb{Z}_n$ will appear exactly $q-1$ times. 
-Using Fermat's little theorem, the state of the generator after $k=u(q-1) + v$ steps, with $u=\lfloor k/(q-1)\rfloor$ and $v=k\thinspace\textrm{mod}\thinspace (q-1)$, is given by %equation \eqref{pseudoskip}.
-%Since  $a^{q-1} \thinspace\textrm{mod}\thinspace q = 1$, the skips repeat after $q-1$ steps. This results in the following pseudorandom ciphertext sequence:
-\begin{subequations}\label{pseudoskip}
-\begin{align}
-s_k &= s_0 a^k \thinspace\textrm{mod}\thinspace q = s_0 a^v \thinspace\textrm{mod}\thinspace q 
-= a^{v_0+v} \thinspace\textrm{mod}\thinspace q ,\\
-m_k &= %\left(m_0 + \sum_{j=1}^k s_k\right) \thinspace\textrm{mod}\thinspace n 
-%\left( m_0 + \sum_{j=1}^k{ s_0 a^j \thinspace\textrm{mod}\thinspace q } \right)\thinspace\textrm{mod}\thinspace n , \notag \\
-\left( m_0 + \sum_{j=1}^k{ s_0 a^j \thinspace\textrm{mod}\thinspace q } \right)\thinspace\textrm{mod}\thinspace n , \notag \\
-&= \left( m_0 +ub + \sum_{j=1}^v{ a^{v_0+j} \thinspace\textrm{mod}\thinspace q } \right)\thinspace\textrm{mod}\thinspace n , 
-%&= \left( (u_0+u) q(q-1)/2 + \sum_{j=1}^v{ a^{v_0+j} \thinspace\textrm{mod}\thinspace q } \right)\thinspace\textrm{mod}\thinspace n ,
-\label{pseudoskipb}  \\
-c_k &= m_k^e \thinspace\textrm{mod}\thinspace n , 
-%s_0 &=a^{v_0} \thinspace\textrm{mod}\thinspace q ,\\
-%m_0 &= u_0 q(q-1)/2 \thinspace\textrm{mod}\thinspace n .
-%u&=\lfloor k/(q-1) \rfloor , \\
-%v&= k  \thinspace\textrm{mod}\thinspace (q-1) , \\ 
-%k&=(q-1)u + v, \\
-\end{align}
-\end{subequations}
-where $s_0=a^{v_0} \thinspace\textrm{mod}\thinspace q$. %and $m_0 = u_0 q(q-1)/2 \thinspace\textrm{mod}\thinspace n$.
-Even though the message and ciphertext sequence can be expressed in closed form, calculating the values of $m_k$ and $c_k$ for large $k$ requires $O(q)$ steps
-unless $k$ is close to a multiple of $q-1$. Likewise, determining the value of $k=(q-1)u+v$ that gives a particular state $(m,s)$ requires $O(q)$ steps.
-%Using a pseudorandom skip sequence serves several important purposes: 
-The method has the following properties:
-
-\begin{itemize}
-
-%\item A pseudorandom skip effectively eliminates correlated cribs. 
-
-
-\item The algorithm is based on elementary number theory and cryptography, and satisfies all of Coddington's criteria.\cite{Coddington} 
-
-
-\item Using a pseudorandom skip extends the period of the generator to $P=(q-1)n$, and provides a uniform sampling of ciphertexts over the full period of the generator. Each message $m \in \mathbb{Z}_n$, and hence each ciphertext $c \in \mathbb{Z}_n$, will appear exactly $q-1$ times in the full-period sequence. %Using values of $n$ and $q$ of the order of $2^{63}$ gives periods of the order of $2^{126}\approx 8.5 \times 10^{37}$.
-
-%\item The method provides a uniform sampling of ciphertexts over the full period of the generator. Each message $m \in \mathbb{Z}_n$, and hence each ciphertext $c \in \mathbb{Z}_n$, will appear exactly $q-1$ times in the full-period sequence.
-
-
-
-%\item The implementation presented below passes a battery of statistical tests with up to $10^{13}$ pseudorandom numbers per test,
-
-%\item The algorithm can generate hundreds of millions of pseudorandom numbers per second on each node of a multicore 64-bit processor.
-
-%\item  If $k$ is close to a multiple of $q-1$, one can use equation \eqref{pseudoskip} to feasibly skip $k$ steps forward in the pseudorandom sequence  although $q$ is large, it is not computationally feasible to jump directly to any point in the pseudorandom sequence. 
-
-
-
-
-
-%Backward skips can be accomplished by replacing $a$ with $a^{-1} \thinspace\textrm{mod}\thinspace q$, subtracting rather than adding in equation \eqref{pseudogenerator1b}, and reordering  equations \eqref{pseudoskip}. %and \eqref{pseudogenerator1b}.\cite{plessthann} 
-%If $q$ is large, it is not be computationally feasible to jump directly to any point in the pseudorandom sequence. 
-
-%but one can ensure that different sequences that share the same prime $p$ are independent. Firstly, one can choose well-tests different primitive roots $a$ of $q$. 
-
-% if $p$ and $a$ are the same, it is possible to seed the starting values of $m_0$ and $s_0$ in different instances to effectively ensure that no two processes will have overlapping subsequences. 
-
-
-
-
-
-
-\item The method is parallelizable by parameterization, with each independent process derived from a distinct composite modulus  $n=p_1 p_2$. The method is fully scalable on massively parallel supercomputers due to the millions of 32-bit primes. 
-
-\item Pseudorandom sequences that result from different moduli are independent, and have different  periods.
-
-%\item The method is fast since it requires only a few 64-bit integer operations per pseudorandom number. The calculation on each node can be parallelized by stream splitting, with the calculation shared among multiple cores. This allows the code to generate pseudorandom numbers at the rate of hundreds of millions per second.
-
-%\item As we will show below, the period of the generator can be greatly extended by choosing messages using a well-tested prime number linear congruential pseudorandom number generator.
-
-\item The seeding and initialization of the independent streams is simple. % and it is possible to initialize each process without needing information about the states of any of the other processes. 
-
-\item The state of each generator is defined by a few fixed integer parameters $\{n=p_1 p_2,e,q,a\}$, and a few integer state values $\{m,s,c\}$ that change during each call to the generator.
-
-
-
-%only seven integers: $\{m,s,c,n,e,q,a\}$.  All of these values can be stored in local memory, and require no global storage. The values $n$, $e$, $q$ and $a$ are fixed in each instance, while the three values $m$, $s$, and $c$ change during each call to the generator.
-
-%\item The algorithm allows one to quickly jump far forward or backward in the pseudorandom sequence. 
-
-%\item The method does not require combining generators\cite{lecuyer1988} or shuffling\cite{BayesDurham} to remove correlations.
-
-%\item The algorithm is simple enough to allow the generator to be implemented as an in-line function for efficiency. 
-
-\item By using 32-bit primitive roots mod $q$ for the skip generator, 32-bit primes $p_1$ and $p_2$, the Chinese Remainder Theorem, and small exponents $e$, the implementation below requires only a few native 64-bit integer operations per pseudorandom number.
-
-
-\item The calculation in each independent process can be vectorized by operating simultaneously on vectors of messages and skips that belong to widely separated subsequences.
-
-%The algorithm can be parallelized by stream splitting, and can generate double precision pseudorandom numbers at the rate  over one-hundred millions per second on each node of a multi-core supercomputer.
-
-\item If needed, one can use equation \eqref{pseudoskip} to jump far forward in the sequence, as long as the jump distance is close to a multiple of $q-1$.
-
-\item The method passes a battery of strong randomness tests, within each stream and between streams.% intrastream and interstream correlations. 
-
-\end{itemize}
-
-
-
-
-\section{\label{sec:Implementation}Implementation in 64 bits }
-
-
-
-%the set of 98,182,656  millions of primes in the range $[2^{31}, 2^{32}]$.\cite{http://oeis.org/A036378} 
-
-%safe primes selected from the 3,060,794 safe primes in the range $[2^{31} \thinspace . \thinspace . \thinspace 2^{32}]$.
-
-%CRT
-
-%$n\approx q$
-
-
-
-We choose the pseudorandom skip modulus to be $q=2^{63}-25$, the largest prime less than $2^{63}$. Equation \eqref{congruentialgenerator1} can be implemented using 64-bit arithmetic if the primitive root is chosen from the restricted set of values $a<\sqrt{q}$.\cite{WichmanHill1982,BratleyFoxSchrage1987,lecuyer1988} This can be shown by expressing $q$ 
-in the form 
-%as a multiple of $a$ plus a remainder: 
-$q=a q_1 + q_2$, where $q_1=\lfloor q / a \rfloor$ and $q_2=q \thinspace\textrm{mod}\thinspace a$:
-\begin{align}\label{restrictedprimitiveroots}
-a s \thinspace\textrm{mod}\thinspace q &= (a s - \lfloor s/q_1\rfloor q)\thinspace\textrm{mod}\thinspace q \notag \\
-&=  (a s - \lfloor s/q_1\rfloor (a q_1 + q_2))\thinspace\textrm{mod}\thinspace q \notag \\
-&=(a (s - \lfloor s/q_1\rfloor q_1) - q_2 \lfloor s/q_1\rfloor))\thinspace\textrm{mod}\thinspace q \notag \\
-&= (a (s \thinspace\textrm{mod}\thinspace q_1) - q_2 \lfloor s/q_1\rfloor ))\thinspace\textrm{mod}\thinspace q .
-\end{align}
-If $2^{31}<a<\sqrt{q}$, then $a$, $q_1$, and $q_2$ are all 32-bits, and intermediate results 
-$s_1 = a (s \thinspace\textrm{mod}\thinspace q_1)$ and $s_2 = q_2 \lfloor s/q_1\rfloor$ in the final line of equation \eqref{restrictedprimitiveroots} are both less than $q$. L'Ecuyer, Blouin, and Couture,\cite{LecuyerBlouinCouture1993} and  
-Sezgin and Sezgin\cite{SezginSezgin2013} give a handful of restricted primitive roots $a<\sqrt{q}$ that have good spectral test properties and pass all U01 Crush and BigCrush tests.\cite{U01Test}
-By using restricted primitive roots, 32-bit primes, and the Chinese Remainder Theorem, the entire RSA calculation can be implemented using fast native unsigned 64-bit integer arithmetic. %and the pseudorandom random skip \eqref{CodeSkipStep} can be implemented using the algorithm\cite{lecuyer1988} 
-The algorithm uses three pre-calculated values $q_1=\lfloor q / a \rfloor$, $q_2=q \thinspace\textrm{mod}\thinspace a$, and $p_2^{-1}\thinspace\textrm{mod}\thinspace p_1$.
-The pseudocode for generating the next double precision floating point pseudorandom number $r$ on the interval $[0\thinspace ,\thinspace 1)$ is given by:
-\begin{subequations}\label{algorithm1}
-\begin{align}
-&s_1 := a \thinspace (s \thinspace\textrm{mod}\thinspace q_1) ,\label{eqn:WH1}\\
-&s_2 := q_2 \thinspace \lfloor s/q_1\rfloor ,\label{eqn:WH2}\\
-&s:=(s_1-s_2)\thinspace\textrm{mod}\thinspace q,\label{eqn:WH3}\\
-%&\mbox{if} \medspace s_2>s_1 \medspace \mbox{then} \medspace s := s_1+(q-s_2), \label{eqn:WH3}\\
-%&\mbox{else} \medspace s := s_1-s_2 ,\label{eqn:WH4}\\
-%&s := (a s) \thinspace\textrm{mod}\thinspace q ,\label{CodeSkipStep}\\
-&m_1 := (m_1+ s) \thinspace\textrm{mod}\thinspace p_1, \\
-&m_2 := (m_2 + s)\thinspace\textrm{mod}\thinspace p_2, \\
-&c_1 := m_1^e \thinspace\textrm{mod}\thinspace p_1 , \label{CodeExponentiationStep1}\\
-&c_2 := m_2^e \thinspace\textrm{mod}\thinspace p_2 ,  \label{CodeExponentiationStep2}\\
-&c :=  \left( \left( (c_1 - c_2) (p_2^{-1}\thinspace\textrm{mod}\thinspace p_1)\right) \thinspace\textrm{mod}\thinspace p_1 \right) p_2 +c_2, \label{CodeExponentiationStep3}\\
-&r := c / n . \label{CodeFloatingPointStep} 
-%&\textrm{RETURN}\medspace r 
-\end{align}
-\end{subequations}
-%The pseudocode \eqref{eqn:WH1} -- \eqref{eqn:WH3} generates the pseudorandom skip sequence given by equation \eqref{pseudoskip}. %using a restricted primitive root, and steps \eqref{CodeExponentiationStep1}--\eqref{CodeExponentiationStep3} perform the exponentiation calculation of the ciphertext $c$. 
-Care needs to be taken in steps \eqref{eqn:WH3} and  \eqref{CodeExponentiationStep3} to avoid negative intermediate results and, %Since $n>2^{53}$, the largest integer than can be represented exactly as an IEEE double, 
-since $n>2^{53}$, step \eqref {CodeFloatingPointStep} needs to include a test to avoid returning the upper limit $r=1.0$ in the IEEE double precision floating point format.%The quantity $p_2^{-1}\thinspace\textrm{mod}\thinspace p_1$ can be precalculated.%For efficiency, one can precalculate the double precision floating point value $1.0/p$ and perform a floating point multiplication instead of a floating point divide in step \eqref{CodeFloatingPointStep}. 
-
-There are 98,182,656 primes in the range $[2^{31}, 2^{32}]$,\cite{http://oeis.org/A036378} 
-but cryptography theory suggests choosing $p_1$ and $p_2$ from the set of \textit{safe primes}, i.e. primes $p$ for which $(p-1)/2$ is 
-also prime.\cite{Schneier1994, SophieGermain} Since the 64-bit ciphertexts are determined by $c_1\in\mathbb{Z}_{p_1}$ and $c_2\in\mathbb{Z}_{p_2}$ using Garner's formula, we performed many statistical tests using 32-bit prime moduli $n=p$.\cite{PohligHellman1978,Beale2014}
-Most primes work fine, but occasionally primes in which $p-1$ contains only small factors 
-%such as $p=1+2^{28}(13)$ 
-fail some of the U01 tests. 
-For those two reasons, we recommend using only safe primes to construct $n=p_1 p_2$. 
-This does not seriously limit the scalability of our generator 
-since there are 3,060,794 safe primes in the range $[2^{31} , 2^{32}]$,\cite{http://oeis.org/A211395} so there are $4.68\times 10^{12}$ safe prime pairs. Using safe primes has the added advantage that every small odd exponent $e$ is coprime to $\phi(n)$.
-
-Choosing $n \approx q$ %$s_k \thinspace\textrm{mod}\thinspace q$ 
-has the advantage that $D$-dimensional message sequence $\{m_k, m_{k+1} .. , m_{k+D} \}$ samples $\mathbb{Z}_n^D$ nearly uniformly, 
-so each message is a pseudorandom one-time pad-like encryption of the previous message.  
-This choice further reduces the total number of moduli available, but there are still over ten million independent values of $n$ that 
-differ from $q$ by less than one part in a million. The full period of each generator is then $P=(q-1)n \approx 2^{126} \approx 8.5 \times 10^{37}$. 
-
-One can use fast primality tests to select the primes $p_1$ and $p_2$. The Rabin-Miller 
-test,\cite{millerprime, rabinprime,FergusonSchneierKohno2010,Schneier1994,Koblitz1987} which is the same as 
-Algorithm P in Knuth,\cite{knuth} provides a simple probabilistic test for primality. Every odd prime $p=1+2^u t$ with $t$ odd 
-satisfies one of the following conditions for every base 
-$g\in \mathbb{Z}_p^*$: either $g^t \thinspace\textrm{mod}\thinspace p = 1 $, or $g^{2^j t} \thinspace\textrm{mod}\thinspace p = p-1$ for some some $j$
-in the range $0 \leq j < u$. A composite modulus $n$ satisfying these criteria is called a strong pseudoprime to base $g$.  
-For any odd composite, the number of bases  %that will pass a single Rabin-Miller test 
-for which $n$ is a strong pseudoprime  
-is less than $ n/4 $. If the test is applied repeatedly with $M$ randomly chosen bases in $\mathbb{Z}_{n}^*$, the probability that a composite will pass every test is less than $4^{-M}$.\cite{Koblitz1987, knuth, millerprime, rabinprime} Better yet, the Rabin-Miller test can deterministically identify all primes below $2^{64}$. 
-There are no composite numbers below $2^{64}$ that are strong pseudoprimes to all of the 
-twelve smallest prime bases ($g=2,3,5,7,11,13,17,19,23,29,31,37$).\cite{PomeranceSelfridgeFlagstaff1980, http://oeis.org/A014233, Zhang2001, JiangDeng2012, wolframrabinmiller}
-Therefore, any number less than $2^{64}$ that passes the Rabin-Miller test for all twelve of these bases is prime. 
-Likewise, any number less than $2^{32}$ that passes the Rabin-Miller test for all of the five smallest prime bases ($g = 2, 3, 5, 7, 11$) is prime. For efficiency, one first checks to see if any small primes divide the modulus before applying the Rabin-Miller test.
-
-%The CRT-based implementation for32-bit primes $p_1$ and $p_2$ is fast since all of the arithmetic operations can be executed in hardware using native 64-bit unsigned arithmetic. 
-%The algorithm produces uniformly distributed real pseudorandom sequences on $[0,1)$ suitable for use in massively parallel stochastic and Monte Carlo simulations. The exponentiations can be accomplished efficiently using the method of repeated squaring,\cite{Schneier1994, Koshy2002, Silverman2006, Koblitz1987} and the Chinese Remainder Theorem so that all of the integer operations can be accomplished using fast native hardware 64-bit arithmetic. %(Note we can take advantage of the CRT in the encryption step since we know $p_1$ and  $p_2$, unlike the encryption step in the RSA encryption step where Alice knows the public value $n$ but does not know  the prime factors.) 
-%As with most RSA cryptographic implementations, we can use small encryption exponents such as $e=3,5,9,17$. 
-
-
-
-\section{\label{sec:Parallelization}Parallelization and Vectorization}
-
-In a multiprocessor supercomputer environment, independent parallel pseudorandom streams can be created by assigning distinct parameters $p_1$, $p_2$, and $a$ to each process.
-%Each stream can be assigned  unique independent parameters $p_1$, $p_2$, and $a$. 
-If the number of choices for $p_1$, $p_2$, and $a$ are $N_{p_1}$, $N_{p_2}$, and $N_a$, respectively, each process can be assigned a unique parameter $0\leq \beta < N_{p_1} N_{p_2} N_a$ based on a time stamp $t$ and process identifier $\alpha$. 
-For example, if we label the  $M_p$  processes with identifiers 
-$\alpha=0, \thinspace . \thinspace . \thinspace M_{p}-1$,
-we can choose  
-$\beta=(t+\alpha \sigma)^\epsilon\thinspace \textrm{mod}\thinspace (N_{p_1} N_{p_2} N_{a})$ where $\sigma$ is an integer close to 
-$\lfloor (N_{p_1} N_{p_2} N_{a}) / M_p \rfloor$ that is coprime to $N_{p_1} N_{p_2} N_{a}$, and exponent $\epsilon$ that is coprime to $\phi(N_{p_1} N_{p_2} N_{a})$ .
-One can then choose $p_1$ in process $\alpha$ to be the $\beta \thinspace\textrm{mod}\thinspace N_{p_1}$-st prime, etc. %Once can also ensure that the skip sequences used in different processes are widely separated by using the skip-ahead property of the skip generator $s_k=s_0 a^k \thinspace\textrm{mod}\thinspace q$. 
-Message Passing Interface (MPI) calls can be used to initialize the $M_p$ parallel processes with independent parameters.
-
-Algorithm \eqref{algorithm1} can be vectorized in each process. 
-%o take advantage of vector processing or multiple cores available to each process.
-%All $M_v$ vector elements can updated in parallel on a vector processor, or with the calculation shared among the multiple cores available to each process.
-%greatly increase execution speed in each process. %of widely separated subsequences in each stream. 
-Vectors of messages $\boldsymbol{m}$ and skips $\boldsymbol{s}$, with $M_v$ 64-bit elements each, can be 
-can be updated simultaneously with fixed parameters $n=p_1 p_2$, $e$, $q$, and $a$ to return a vector of pseudorandom reals 
-%\color{red}
-$\boldsymbol{r}$. The vector pseudocode is 
-%\color{black}. 
-%\color{red}
-\begin{subequations}
-\begin{align}\label{vectorize}
-&\boldsymbol{s} := a \boldsymbol{s} \thinspace\textrm{mod}\thinspace q ,\\
-&\boldsymbol{m} := \left(\boldsymbol{m} + \boldsymbol{s} \right)\thinspace\textrm{mod}\thinspace n ,\\
-&\boldsymbol{r} := \left( \boldsymbol{m}^e \thinspace\textrm{mod}\thinspace n \right)/n .
-%&\boldsymbol{r} := \boldsymbol{c}/n .
-\end{align}
-\end{subequations}
-The elements of the vectors can be updated simultaneously in parallel on a vector processor, or the calculation can be shared among multiple cores available to each process using Open Multiprocessing (OpenMPI).
-As described above, we can use restricted primitive roots and the CRT to update the vectors using only 64-bit arithmetic.
-Our state vector $(\boldsymbol{m},\boldsymbol{s})$ consists of only $2M_v$ 64-bit words. 
-By contrast, vectorizing lagged Fibonacci generators with recursion relation $s_k = (s_{k-q} \circledcirc s_{k-r}) \thinspace\textrm{mod}\thinspace 2^m$ requires much larger state vectors of $r M_v$ $m$-bit words. 
-
-
-%and an array of pseudorandom double precision floats $r^{(\gamma)}$ can be returned.  
-To ensure that the $M_v$ sub-streams 
-labelled $\gamma=0,1,..,M_v-1$
-sample greatly separated subsequences, we use the jump ahead property of the skip generator 
-$s_k=s_0 a^k \thinspace\textrm{mod}\thinspace q$ 
-to widely distribute the skips across the period of the skip generator.
-This can be accomplished by setting initial values of the elements of the skip vector to be $s^{(\gamma)}_0 = s^{(0)}_0 a^{\gamma\lfloor(q-1)/M_v\rfloor}\thinspace\textrm{mod}\thinspace q$. The skip sequences in successive sub-streams will not begin to overlap until the vector has been updated  about $\lfloor (q-1)/M_v\rfloor$ times, 
- i.e. after a total of about $q-1$ pseudorandom numbers have been generated.  Since $q\approx 2^{63}$, this would take hundreds of years for one node to accomplish. Even after the skip sequences in the sub-streams begin to overlap, it is very improbable that any two message subsequences become synchronized since that probability is of the order of $M_v/n$.  (Note that equation  \eqref{pseudoskip} allows one to subdivide the period $P=(q-1)n$ into $n$ subsequences, each with length $q-1$. However, in that case the skips in each subsequence are the same, and the messages in different subsequences differ by multiples of $b=q(q-1)/2\thinspace\textrm{mod}\thinspace n$. We recommend avoiding the use such strongly correlated message patterns.)
-
-
-We developed and tested our code on the University of Colorado Boulder Summit supercomputer,
-which uses  2.50GHz Intel Xeon E5-2680 v3 processors and 24 cores per node.\cite{RMACC} We tested the speed of the code by averaging sequences of $10^9$ pseudorandom numbers, and use OpenMP to share the calculation across multiple cores on each node. %Depending on the exponent and number of cores assigned to the calculation, the RSA code can generate seven-to-fifteen million pseudorandom numbers per second per core. 
-%The speed increases for larger vector sizes. 
-%The following results are for $M_v=16384$, which requires 384 KBytes per process to store the messages, seeds, and double precision randoms. 
-By assigning all 24 cores to each process, the code generates more than $10^8$ pseudorandom numbers per second per process for exponents as large as $e=257$. We recommend  exponents $e\leq 17$, whose 24 core speed ranges from $1.25\times10^8$  to $1.72\times10^8$ pseudorandom numbers per second per process. 
-Eight core speeds range from $5.6\times10^7$  to $9.3\times10^7$ pseudorandom numbers per second per process
-By comparison, the highly optimized (but not necessarily scalable parallel or vectorized) pseudorandom number generators in the Intel MKL library deliver from $2.7$ to $6.0\times 10^8$ pseudorandom numbers per second per process. 
-
- 
-
-
-
-
-
-%Since the period of each stream is greater than $8.5\times 10^{37}$, one can 
-%use the stream splitting properties of a single generator can be used to share the calculation of an array of values among the multiple cores on a single processor. 
-%This splits the stream into $M_a$ sub-streams.
-%Let's focus on a single process and generator with fixed values of $n=p_1 p_2$, $e$, $q$, and $a$, with full period is $P=(q-1)n$. 
-%Each processor on a supercomputer typically has many independent cores that can be operated in parallel. Instead of generating one pseudorandom number at a time, we can calculate a array of pseudorandom numbers and spread the calculation of the array across different threads that utilize the multiple cores on each processor. 
-%Suppose that we want to calculate an array of $M_a$ pseudorandom numbers in parallel, all selected from the pseudorandom stream defined by $n=p_1 p_2$, $e$, $q$, and $a$.  In that case, one can define message array $m^{(\gamma)}$ and skip array $s^{(\gamma)}$ with $\gamma = 0, 1, .. M_a-1$. All $M_a$ values of the array can updated in parallel using the code in \eqref{algorithm1}, and an array of pseudorandom double precision floats $r^{(\gamma)}$ can be returned.  
-%To ensure that no two sub-streams overlap in any conceivable length run, we can use the skip-ahead property of the skip generator $s_k=s_0 a^k \thinspace\textrm{mod}\thinspace q$ to evenly spreads the skips in the different sub-streams across the period of the skip generator.
-%Using the skip-ahead property of the skip generator $s_k=s_0 a^k \thinspace\textrm{mod}\thinspace q$, we can ensure that no two sub-streams will overlap until at least a total of $q-1$ pseudorandom numbers have been returned. In addition, we can provide a very high level of confidence that no two streams will overlap even after $(q-1)u$ pseudorandom numbers have been returned if $u \ll n/M_a$. 
- %first choosing $s^{(0)}_0$ based on the process identifier $\alpha$ to ensure that independent multiprocessor jobs start at widely different places in the skip sequence, and then 
-%This is accomplished by setting initial values in the skip array to be $s^{(\gamma)}_0 = s^{(0)}_0 a^{\gamma\lfloor(q-1)/M_a\rfloor}\thinspace\textrm{mod}\thinspace$. The skip sequences in successive sub-streams will not begin to overlap until the array has been updated  $(q-1)/M_a$ times.
-%calls have been made to the subroutine,
-% i.e. after a total of about $q-1$ pseudorandom numbers have been generated.  Since $q\approx 2^{63}$, this would take over 300 years at the rate of $10^9$ pseudorandom numbers per second per node. Even though skip sequences in successive sub-streams will begin to overlap after $q-1$ numbers have been calculated, it is very improbable that any two message subsequences are also synchronized at that point since that probability is $M_a/n$. We can can share the array calculations across the multiple cores on each node by using OpenMP, for example. Our code with $e=9$ generates more than $1.5 \times 10^8$ pseudorandom numbers per second on each node of the University of Colorado Boulder Summit supercomputer,
-%which uses  2.50GHz Intel Xeon E5-2680 v3 processors and 24 cores per node.\cite{RMACC} Our code on this computer generates about $1.2\times 10^7$ pseudorandom number per second per core assigned to the parallel threads.
-%By comparison, the highly optimized (not necessarily scalably parallel) pseudorandom number generators in the Intel MKL library have speeds that range from $2.7$ to $6\times 10^8$ pseudorandom numbers per second on each node.
-
-
-\section{\label{sec:Tests}Tests}
-
-We applied the well-established pseudorandom number test suites DIEHARD,\cite{diehard} NIST,\cite{NIST} and TestU01,\cite{U01Test} to ensure the generator passes a wide variety of tests, and calculated $\chi^2$ and the associated $p$-value for the following fourteen additional chi-squared tests.% most recommended by Knuth.\cite{knuth} . For each test,  %i.e. the probability of $\chi^2$ having that value above or below the median. We applied these additional tests to sequences of up to $10^{13}$ pseudorandom numbers per test. 
-
-\begin{itemize}
-
-\item One-dimensional frequency test:\cite{knuth} We distributed sequences of pseudorandom numbers into a one-dimensional histogram with $2^{20}$ bins, and compared the histogram to a uniform Poisson distribution. 
-
-\item Serial test in $D$=2, 3, 4, 5, and 6 dimensions:\cite{knuth} We distributed sequences of $D$ successive pseudorandom numbers $\{r_1, \ldots ,r_D\}$ into a $D$-dimensional histogram with either $2^{20}$ or $10^6$ bins, and compared the histogram to a uniform Poisson distribution. This tests for $D$-dimensional sequential correlations  in the sequence.
-
-%\item Three-dimensional serial test:\cite{knuth} We distributed triplets of pseudorandom numbers into a three-dimensional histogram with $10^6$ bins, and compared the histogram to a uniform Poisson distribution. This tests for sequential triplet correlations in the sequence.
-
-
-%\item Four-dimensional serial test:\cite{knuth} We distributed groups of four pseudorandom numbers into a four-dimensional histogram with $2^{20}$ bins,  and compared the histogram to a uniform Poisson distribution. This tests for sequential four-point correlations in the sequence.
-
-
-%\item Five dimensional serial test:\cite{knuth} We distributed groups of five pseudorandom numbers into a five-dimensional histogram with $2^{20}$ bins,  and compared the histogram to a uniform Poisson distribution. This tests for sequential five-point correlations in the sequence.
-
-\item Poker test:\cite{knuth} We used groups of five pseudorandom numbers and counted the number of pairs, three-of-a-kind etc.~formed from five cards with sixteen denominations, and compared the resulting histogram to a Poisson distribution derived from the exact probabilities. This tests for a variety of five-point correlations in the sequence.
-
-\item Collision tests:\cite{knuth} We used the pseudorandom stream to distribute $2^{14}$ balls into $2^{20}$ urns, and compare the distribution of the number of collisions with the exact distribution. We used this to test for correlations in the twenty most significant bits of each pseudorandom number, and  the most significant bit of twenty sequential pseudorandom numbers. %This tests for bit correlations in each number, and long-range correlations in the most significant bits. 
-
-\item Gaps test:\cite{knuth} We compared the histogram of the length of runs of 0's ($r\leq 0.5$) and 1's ($r>0.5$) to the exact Poisson distribution. This tests for correlations in the leading bits.
-
-\item Max-of-t test:\cite{knuth} We compared the distribution of the maximum value among $\{r_1,r_2,\ldots ,r_t\}$ for $t=32$ with the exact probability distribution.
-
-\item Permutations test:\cite{knuth} We compared the permutation ordering number of $t$ successive pseudorandom numbers $\{r_1,r_2,\ldots ,r_t\}$ for $t=10$, with the uniform distribution of $t!$ possibilities.
-
-\item Fourier test:\cite{MascagniSrinivasan2000} We used a fast Fourier transform\cite{fft} to calculate the Fourier coefficients of sequences of  $M=2^{20}$ pseudorandom numbers, 
-\begin{align}
-\hat{x}_k = \frac{1}{\sqrt{M}} \sum_{j=0}^{M-1} { x_j e^{2\pi i j k/M} } ,
-\end{align}
-where $x_j=(r_{2j} - 0.5) + i (r_{2j+1} - 0.5)$. We compared the distribution of the real and imaginary parts of  $\hat{x}_k$  with the exact normal distribution with zero mean and variance $1/12$. This test exposes long-range pair correlations in the pseudorandom sequence. 
-
-\item Two-dimensional Ising model energy distribution test:\cite{beale1996, pathriabeale2011} We performed Wolff algorithm\cite{wolff} Monte Carlo simulations at the critical point of the two-dimensional Ising model on a $128\times128$ square lattice, and compared the energy histogram to a Poisson distribution derived from the exact probabilities\cite{beale1996, pathriabeale2011} Since the Wolff algorithm is based on stochastically growing fractal critical clusters that can span the system, this tests for long-range correlations in the pseudorandom sequence, and has proven to be effective at identifying weak generators.\cite{beale1996,pathriabeale2011,ferrenberglandauwong1992} %Assigning an independent generator to each of the 32768 bonds in the lattice tests provides an additional test for exposing interstream correlations.
-See figure 1.
-
-\end{itemize}
-\begin{figure}[h!]
-\includegraphics[width=4.5in]{EnergyPlotHistogramLog.pdf}
-\caption{The exact energy distribution\cite{beale1996,pathriabeale2011} for a $128 \times128$ square-lattice two-dimensional Ising model at the critical temperature (solid line) on a log scale, and the distribution calculated from $1.34\times 10^8$ configurations chosen from $4.36\times 10^8$ Monte Carlo steps per spin. The simulation was performed using  from a Wolff\cite{wolff} algorithm (error bars). The Wolff algorithm effectively eliminates critical slowing down, so the selected configurations are nearly uncorrelated with correlation time $\tau=0.44$.
-The abcsissa is the energy above the ordered ground state in units of four times the coupling constant $J$. The simulation was about $8\times 10^8$ Monte Carlo steps per spin.
-The simulation included 32 independent parallel processes, using approximately $10^{13}$ pseudorandom numbers generated with exponent $e=9$. %The configurations were drawn from a simulation of $4.36\times 10^8$ Monte Carlo steps per spin. 
-The result was $\chi^2=990$ with 1026 degrees of freedom, for a $p$-value of $p=0.79$. %The universal but non-gaussian asymmetry of the distribution is due to the divergent correlation length at the critical point. By contrast, the R250\cite{KirkpatrickStoll} lagged Fibonacci generator in the Intel MKL library fails this test at the $2750\sigma$ level.\cite{beale1996,pathriabeale2011,ferrenberglandauwong1992} 
+Giving a \verb+\label{#1}+ command directly after the \verb+\begin{subequations}+, 
+allows you to reference all the equations in the \texttt{subequations} environment. 
+For example, the equations in the preceding subequations environment were
+Eqs.~(\ref{eq:whole}).
+
+\subsubsection{Wide equations}
+The equation that follows is set in a wide format, i.e., it spans the full page. 
+The wide format is reserved for long equations
+that cannot easily be set in a single column:
+\begin{widetext}
+\begin{equation}
+{\cal R}^{(\text{d})}=
+ g_{\sigma_2}^e
+ \left(
+   \frac{[\Gamma^Z(3,21)]_{\sigma_1}}{Q_{12}^2-M_W^2}
+  +\frac{[\Gamma^Z(13,2)]_{\sigma_1}}{Q_{13}^2-M_W^2}
+ \right)
+ + x_WQ_e
+ \left(
+   \frac{[\Gamma^\gamma(3,21)]_{\sigma_1}}{Q_{12}^2-M_W^2}
+  +\frac{[\Gamma^\gamma(13,2)]_{\sigma_1}}{Q_{13}^2-M_W^2}
+ \right)\;. 
+ \label{eq:wideeq}
+\end{equation}
+\end{widetext}
+This is typed to show how the output appears in wide format.
+(Incidentally, since there is no blank line between the \texttt{equation} environment above 
+and the start of this paragraph, this paragraph is not indented.)
+
+\section{Cross-referencing}
+REV\TeX{} will automatically number such things as
+sections, footnotes, equations, figure captions, and table captions. 
+In order to reference them in text, use the
+\verb+\label{#1}+ and \verb+\ref{#1}+ commands. 
+To reference a particular page, use the \verb+\pageref{#1}+ command.
+
+The \verb+\label{#1}+ should appear 
+within the section heading, 
+within the footnote text, 
+within the equation, or 
+within the table or figure caption. 
+The \verb+\ref{#1}+ command
+is used in text at the point where the reference is to be displayed.  
+Some examples: Section~\ref{sec:level1} on page~\pageref{sec:level1},
+Table~\ref{tab:table1},%
+\begin{table}[b]%The best place to locate the table environment is directly after its first reference in text
+\caption{\label{tab:table1}%
+A table that fits into a single column of a two-column layout. 
+Note that REV\TeX~4 adjusts the intercolumn spacing so that the table fills the
+entire width of the column. Table captions are numbered
+automatically. 
+This table illustrates left-, center-, decimal- and right-aligned columns,
+along with the use of the \texttt{ruledtabular} environment which sets the 
+Scotch (double) rules above and below the alignment, per APS style.
 }
+\begin{ruledtabular}
+\begin{tabular}{lcdr}
+\textrm{Left\footnote{Note a.}}&
+\textrm{Centered\footnote{Note b.}}&
+\multicolumn{1}{c}{\textrm{Decimal}}&
+\textrm{Right}\\
+\colrule
+1 & 2 & 3.001 & 4\\
+10 & 20 & 30 & 40\\
+100 & 200 & 300.0 & 400\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+and Fig.~\ref{fig:epsart}.%
+\begin{figure}[b]
+\includegraphics{fig_1}% Here is how to import EPS art
+\caption{\label{fig:epsart} A figure caption. The figure captions are
+automatically numbered.}
 \end{figure}
 
+\section{Floats: Figures, Tables, Videos, etc.}
+Figures and tables are usually allowed to ``float'', which means that their
+placement is determined by \LaTeX, while the document is being typeset. 
 
-We tested the generator with thousands of different safe prime pairs for exponents as small as $e=3$. Every instance passed all of our correlations tests, some with as many as $10^{13}$ pseudorandom numbers per test. In no case did a chi-squared test produce a $p$-value less than $10^{-6}$ or greater than $1-10^{-6}$. We also counted the number of tests that produced $p$-values less than $10^{-3}$ or greater than $1-10^{-3}$, and confirmed the number was consistent with the expected rate of one per one-thousand for each. %While our generator with exponent $e=3$ passes all of these tests and is the fastest, we recommend using one of the exponents $e=5,9,17$ as a compromise between speed and reliability. 
-We also applied the 1D frequency test, $D$-dimensional serial tests, the poker test, collisions tests, and gaps tests to the least significant bits, which also passed every test.
+Use the \texttt{figure} environment for a figure, the \texttt{table} environment for a table.
+In each case, use the \verb+\caption+ command within to give the text of the
+figure or table caption along with the \verb+\label+ command to provide
+a key for referring to this figure or table.
+The typical content of a figure is an image of some kind; 
+that of a table is an alignment.%
+\begin{figure*}
+\includegraphics{fig_2}% Here is how to import EPS art
+\caption{\label{fig:wide}Use the figure* environment to get a wide
+figure that spans the page in \texttt{twocolumn} formatting.}
+\end{figure*}
+\begin{table*}
+\caption{\label{tab:table3}This is a wide table that spans the full page
+width in a two-column layout. It is formatted using the
+\texttt{table*} environment. It also demonstates the use of
+\textbackslash\texttt{multicolumn} in rows with entries that span
+more than one column.}
+\begin{ruledtabular}
+\begin{tabular}{ccccc}
+ &\multicolumn{2}{c}{$D_{4h}^1$}&\multicolumn{2}{c}{$D_{4h}^5$}\\
+ Ion&1st alternative&2nd alternative&lst alternative
+&2nd alternative\\ \hline
+ K&$(2e)+(2f)$&$(4i)$ &$(2c)+(2d)$&$(4f)$ \\
+ Mn&$(2g)$\footnote{The $z$ parameter of these positions is $z\sim\frac{1}{4}$.}
+ &$(a)+(b)+(c)+(d)$&$(4e)$&$(2a)+(2b)$\\
+ Cl&$(a)+(b)+(c)+(d)$&$(2g)$\footnotemark[1]
+ &$(4e)^{\text{a}}$\\
+ He&$(8r)^{\text{a}}$&$(4j)^{\text{a}}$&$(4g)^{\text{a}}$\\
+ Ag& &$(4k)^{\text{a}}$& &$(4h)^{\text{a}}$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
 
+Insert an image using either the \texttt{graphics} or
+\texttt{graphix} packages, which define the \verb+\includegraphics{#1}+ command.
+(The two packages differ in respect of the optional arguments 
+used to specify the orientation, scaling, and translation of the image.) 
+To create an alignment, use the \texttt{tabular} environment. 
 
-We confirmed that the algorithm displayed lack of correlation between streams. 
-Each of $M_p$ distinct streams labeled $\alpha=0,1,.. M_p -1$ was assigned  a different prime pairs $p_1$ and $p_2$.
-Our interstream correlations tests drew the pseudorandom numbers from the $M_p$ streams in the order $r_1^{(0)}, r_1^{(1)}, r_1^{(2)}, \ldots , r_1^{(N_p-1)}, r_2^{(0)}, r_2^{(1)}, \ldots$ , with various values of $M_p$. %We tested  groupings of $N_p=2$, $32$, $1024$, $32768$ and $1048576$ different streams, using exponents $e= 5, \medspace 9, \medspace \mbox{and} \medspace 17$.  We also included tests using $N_p=3,060,794$ safe primes, i.e. all of the safe primes in  $[2^{31} \thinspace .\thinspace . \thinspace 2^{32}]$. 
-To ensure that seeding coincidences do not cause correlations, we performed the interstream correlations tests using the same primitive root $a$ in each stream, and initialized every sequence with the same values $m_0=0$ and $s_0=1$. The interstream correlations passed all of the U01 SmallCrush, Crush and BigCrush tests, even for $e=3$.
+The best place to locate the \texttt{figure} or \texttt{table} environment
+is immediately following its first reference in text; this sample document
+illustrates this practice for Fig.~\ref{fig:epsart}, which
+shows a figure that is small enough to fit in a single column. 
 
-%For several of these tests, we sampled the low-order bits to confirm they do not harbor any hidden correlations. 
+In exceptional cases, you will need to move the float earlier in the document, as was done
+with Table~\ref{tab:table3}: \LaTeX's float placement algorithms need to know
+about a full-page-width float earlier. 
 
-To examine the resilience of the generator, we tested various intentionally weakened versions the generator. As noted before, the generator passes the U01 tests with a unit or constant skip for $e\geq 9$. We tested the generator with $e=1$, i.e. $c_k=m_k$ to test our use of $n\approx q$. Since the messages nearly uniform sample of $Z_n^D$, the messages themselves pass gentle randomness tests such as U01 SmallCrush. To test the sensitivity of the generator to the quality of the skip sequence, we tested the skip generator with $a=3,6,7,10,11$, the smallest, and arguably worst, primitive roots mod $q$. The generator passes the U01 Crush tests with $e=3$ even with these bad primitive roots. 
-%Since the 64-bit ciphertexts are  combinations of $c_1\in\mathbb{Z}_{p_2}$and $c_2\in\mathbb{Z}_{p_2}$ from Garner's formula, many of the tests were done using 32-bit prime moduli $n=p$. These also pass nearly all statistical tests, but occasionally primes in which $p-1$ contains only small factors such as $p=1+13 2^{28}$ fail some of the U01 tests. For that reason, in addition to the cryptography theory recommendation, we use only safe primes to construct $n=p_1 p_2$. %This does not seriously affect the scalability of the algorithm since there are 3,060,794 safe primes in the range $[2^{31} \thinspace . \thinspace . \thinspace 2^{32}]$ which gives more than $4\times 10^{12}$ independent moduli. To make the $d$-dimensional message patterns to be as uniform on $\mathbb{Z}_n^d$ as possible, we choose $p_1$ from the 1,760,000 safe primes on $[\lfloor2^{31.5}\rfloor \thinspace . \thinspace . \thinspace 2^{32}]$, and $p_2$ a safe prime near $\lfloor q/p_1 \rfloor$. 
+Fig.~\ref{fig:wide}
+has content that is too wide for a single column,
+so the \texttt{figure*} environment has been used.%
+\begin{table}[b]
+\caption{\label{tab:table4}%
+Numbers in columns Three--Five are aligned with the ``d'' column specifier 
+(requires the \texttt{dcolumn} package). 
+Non-numeric entries (those entries without a ``.'') in a ``d'' column are aligned on the decimal point. 
+Use the ``D'' specifier for more complex layouts. }
+\begin{ruledtabular}
+\begin{tabular}{ccddd}
+One&Two&
+\multicolumn{1}{c}{\textrm{Three}}&
+\multicolumn{1}{c}{\textrm{Four}}&
+\multicolumn{1}{c}{\textrm{Five}}\\
+%\mbox{Three}&\mbox{Four}&\mbox{Five}\\
+\hline
+one&two&\mbox{three}&\mbox{four}&\mbox{five}\\
+He&2& 2.77234 & 45672. & 0.69 \\
+C\footnote{Some tables require footnotes.}
+  &C\footnote{Some tables need more than one footnote.}
+  & 12537.64 & 37.66345 & 86.37 \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
 
+The content of a table is typically a \texttt{tabular} environment, 
+giving rows of type in aligned columns. 
+Column entries separated by \verb+&+'s, and 
+each row ends with \textbackslash\textbackslash. 
+The required argument for the \texttt{tabular} environment
+specifies how data are aligned in the columns. 
+For instance, entries may be centered, left-justified, right-justified, aligned on a decimal
+point. 
+Extra column-spacing may be be specified as well, 
+although REV\TeX~4 sets this spacing so that the columns fill the width of the
+table. Horizontal rules are typeset using the \verb+\hline+
+command. The doubled (or Scotch) rules that appear at the top and
+bottom of a table can be achieved enclosing the \texttt{tabular}
+environment within a \texttt{ruledtabular} environment. Rows whose
+columns span multiple columns can be typeset using the
+\verb+\multicolumn{#1}{#2}{#3}+ command (for example, see the first
+row of Table~\ref{tab:table3}).%
 
-%CTR mode with $s=1$ and $s=b$ passes all U01 tests for $e\geq 9$.
+Tables~\ref{tab:table1}, \ref{tab:table3}, \ref{tab:table4}, and \ref{tab:table2}%
+\begin{table}[b]
+\caption{\label{tab:table2}
+A table with numerous columns that still fits into a single column. 
+Here, several entries share the same footnote. 
+Inspect the \LaTeX\ input for this table to see exactly how it is done.}
+\begin{ruledtabular}
+\begin{tabular}{cccccccc}
+ &$r_c$ (\AA)&$r_0$ (\AA)&$\kappa r_0$&
+ &$r_c$ (\AA) &$r_0$ (\AA)&$\kappa r_0$\\
+\hline
+Cu& 0.800 & 14.10 & 2.550 &Sn\footnotemark[1]
+& 0.680 & 1.870 & 3.700 \\
+Ag& 0.990 & 15.90 & 2.710 &Pb\footnotemark[2]
+& 0.450 & 1.930 & 3.760 \\
+Au& 1.150 & 15.90 & 2.710 &Ca\footnotemark[3]
+& 0.750 & 2.170 & 3.560 \\
+Mg& 0.490 & 17.60 & 3.200 &Sr\footnotemark[4]
+& 0.900 & 2.370 & 3.720 \\
+Zn& 0.300 & 15.20 & 2.970 &Li\footnotemark[2]
+& 0.380 & 1.730 & 2.830 \\
+Cd& 0.530 & 17.10 & 3.160 &Na\footnotemark[5]
+& 0.760 & 2.110 & 3.120 \\
+Hg& 0.550 & 17.80 & 3.220 &K\footnotemark[5]
+&  1.120 & 2.620 & 3.480 \\
+Al& 0.230 & 15.80 & 3.240 &Rb\footnotemark[3]
+& 1.330 & 2.800 & 3.590 \\
+Ga& 0.310 & 16.70 & 3.330 &Cs\footnotemark[4]
+& 1.420 & 3.030 & 3.740 \\
+In& 0.460 & 18.40 & 3.500 &Ba\footnotemark[5]
+& 0.960 & 2.460 & 3.780 \\
+Tl& 0.480 & 18.90 & 3.550 & & & & \\
+\end{tabular}
+\end{ruledtabular}
+\footnotetext[1]{Here's the first, from Ref.~\onlinecite{feyn54}.}
+\footnotetext[2]{Here's the second.}
+\footnotetext[3]{Here's the third.}
+\footnotetext[4]{Here's the fourth.}
+\footnotetext[5]{And etc.}
+\end{table}
+show various effects.
+A table that fits in a single column employs the \texttt{table}
+environment. 
+Table~\ref{tab:table3} is a wide table, set with the \texttt{table*} environment. 
+Long tables may need to break across pages. 
+The most straightforward way to accomplish this is to specify
+the \verb+[H]+ float placement on the \texttt{table} or
+\texttt{table*} environment. 
+However, the \LaTeXe\ package \texttt{longtable} allows headers and footers to be specified for each page of the table. 
+A simple example of the use of \texttt{longtable} can be found
+in the file \texttt{summary.tex} that is included with the REV\TeX~4
+distribution.
 
-%Tested skip generator with ten values of $a$
+There are two methods for setting footnotes within a table (these
+footnotes will be displayed directly below the table rather than at
+the bottom of the page or in the bibliography). The easiest
+and preferred method is just to use the \verb+\footnote{#1}+
+command. This will automatically enumerate the footnotes with
+lowercase roman letters. However, it is sometimes necessary to have
+multiple entries in the table share the same footnote. In this case,
+there is no choice but to manually create the footnotes using
+\verb+\footnotemark[#1]+ and \verb+\footnotetext[#1]{#2}+.
+\texttt{\#1} is a numeric value. Each time the same value for
+\texttt{\#1} is used, the same mark is produced in the table. The
+\verb+\footnotetext[#1]{#2}+ commands are placed after the \texttt{tabular}
+environment. Examine the \LaTeX\ source and output for
+Tables~\ref{tab:table1} and \ref{tab:table2}
+for examples.
 
-%Tested RSA with $e=1$, i.e. $c_k=\left( \sum_{j=1}^k \left( s_0 a^j \thinspace \textrm{mod} \thinspace q \right)\right) \thinspace \textrm{mod} \thinspace n$. This tests that even the message sequence itself is reasonably random. 
+Video~\ref{vid:PRSTPER.4.010101} 
+illustrates several features new with REV\TeX4.2,
+starting with the \texttt{video} environment, which is in the same category with
+\texttt{figure} and \texttt{table}.%
+\begin{video}
+\href{http://prst-per.aps.org/multimedia/PRSTPER/v4/i1/e010101/e010101_vid1a.mpg}{\includegraphics{vid_1a}}%
+ \quad
+\href{http://prst-per.aps.org/multimedia/PRSTPER/v4/i1/e010101/e010101_vid1b.mpg}{\includegraphics{vid_1b}}
+ \setfloatlink{http://link.aps.org/multimedia/PRSTPER/v4/i1/e010101}%
+ \caption{\label{vid:PRSTPER.4.010101}%
+  Students explain their initial idea about Newton's third law to a teaching assistant. 
+  Clip (a): same force.
+  Clip (b): move backwards.
+ }%
+\end{video}
+The \verb+\setfloatlink+ command causes the title of the video to be a hyperlink to the
+indicated URL; it may be used with any environment that takes the \verb+\caption+
+command.
+The \verb+\href+ command has the same significance as it does in the context of
+the \texttt{hyperref} package: the second argument is a piece of text to be 
+typeset in your document; the first is its hyperlink, a URL.
 
+\textit{Physical Review} style requires that the initial citation of
+figures or tables be in numerical order in text, so don't cite
+Fig.~\ref{fig:wide} until Fig.~\ref{fig:epsart} has been cited.
 
-%We then used equation \eqref{pseudogenerator1} to test for intrastream correlations among ciphertexts separated by $q-1$ steps in the sequence across the full period.  This pseudorandom sequence is  given by $c_{u(q-1)}= (m_0+ u b)^e \thinspace\textrm{mod}\thinspace p$, with $b=q (q-1)/2 \thinspace\textrm{mod}\thinspace p$ and $u=0,1,\thinspace . \thinspace . n-1$. These constant skip sequences pass all of our the statistical tests for exponents as small as $e=7$.% for up to $2^{25}$ pseudorandom numbers. 
+\begin{acknowledgments}
+We wish to acknowledge the support of the author community in using
+REV\TeX{}, offering suggestions and encouragement, testing new versions,
+\dots.
+\end{acknowledgments}
 
+\appendix
 
+\section{Appendixes}
 
+To start the appendixes, use the \verb+\appendix+ command.
+This signals that all following section commands refer to appendixes
+instead of regular sections. Therefore, the \verb+\appendix+ command
+should be used only once---to setup the section commands to act as
+appendixes. Thereafter normal section commands are used. The heading
+for a section can be left empty. For example,
+\begin{verbatim}
+\appendix
+\section{}
+\end{verbatim}
+will produce an appendix heading that says ``APPENDIX A'' and
+\begin{verbatim}
+\appendix
+\section{Background}
+\end{verbatim}
+will produce an appendix heading that says ``APPENDIX A: BACKGROUND''
+(note that the colon is set automatically).
 
+If there is only one appendix, then the letter ``A'' should not
+appear. This is suppressed by using the star version of the appendix
+command (\verb+\appendix*+ in the place of \verb+\appendix+).
 
-%Since ciphertexts separated by $k<q-1$ steps demonstrate good intrastream statistics because of the pseudorandom skip, and ciphertexts separated by multiples of $q-1$ steps demonstrate good statistics with constant skips $b=q(q-1)/2 \thinspace\textrm{mod}\thinspace n$, one has good reason to believe that the entire pseudorandom sequence should pass a battery of statistical tests until the length of the pseudorandom sequence approaches the full period. To test this, we performed intrastream statistical tests of the generator over as large a fraction of the period and for as many different moduli as possible. We tested sequences of $10^{11}$ pseudorandom numbers using hundreds of different prime pairs, sequences of $10^{12}$ pseudorandom numbers using dozens of different prime pairs, and sequences of $10^{13}$ pseudorandom numbers using a few prime pairs. The method passed every test we applied.
+\section{A little more on appendixes}
 
-\begin{comment}
-\color{red}
-One can index the pseudorandom sequence by starting with $\bar{s}_0=1$ and $\bar{m}_0=0$:
+Observe that this appendix was started by using
+\begin{verbatim}
+\section{A little more on appendixes}
+\end{verbatim}
+
+Note the equation number in an appendix:
+\begin{equation}
+E=mc^2.
+\end{equation}
+
+\subsection{\label{app:subsec}A subsection in an appendix}
+
+You can use a subsection or subsubsection in an appendix. Note the
+numbering: we are now in Appendix~\ref{app:subsec}.
+
+Note the equation numbers in this appendix, produced with the
+subequations environment:
 \begin{subequations}
-\begin{align}
-\bar{s}_k&=a^v \thinspace\textrm{mod}\thinspace q,\\
-\bar{m}_k&=\left( u b + \sum_{j=1}^v a^j \thinspace\textrm{mod}\thinspace q \right) \thinspace\textrm{mod}\thinspace n .
-\end{align}
+\begin{eqnarray}
+E&=&mc, \label{appa}
+\\
+E&=&mc^2, \label{appb}
+\\
+E&\agt& mc^3. \label{appc}
+\end{eqnarray}
 \end{subequations}
-where $k=(q-1)u+v$, $u=\lfloor k/(q-1)$, $v=\thinspace\textrm{mod}\thinspace (q-1)$, and $b=q(q-1)/2 \thinspace\textrm{mod}\thinspace q$. Even though each skip--message pair 
- in the sequence has a closed mathematical form, determining $(\bar{s}_k,\bar{m}_k)$  requires $O(q)$ operations unless $k$ is close to a multiple of $q-1$. Likewise, determining the value of $k=(q-1)u+v$ that gives $\bar{s}_k=s$ and $\bar{m}_k=m$ is also hard. The skip can written as $s=a^{v_0}\thinspace\textrm{mod}\thinspace q$, so  the correct $v$ index is given by $v=v_0$. However, determining $v_0$ is hard because of the discrete logarithm problem, and $u$ is determined from 
-\begin{subequations}
-\begin{align}
-m&=\bar{m}_{u(q-1)+v_0}=\left( u b + \sum_{j=1}^{v_0} a^j \thinspace\textrm{mod}\thinspace q \right) \thinspace\textrm{mod}\thinspace n , \quad \mbox{so}\\
-u&=\left( m b^{-1} - b^{-1} \sum_{j=1}^{v_0} a^j \thinspace\textrm{mod}\thinspace q \right) \thinspace\textrm{mod}\thinspace n 
-\end{align}
-\end{subequations}
-which also requires $O(q)$ operations unless $v_0$ is close 0 or $q-1$. Therefore, even after $\lfloor(q-1)/M_v\rfloor]$ vector updates and successive skips begin following overlapping skip sequences, the messages will be synchronized only if $u$ has the correct value, which happens with probability $1/n$. With $M_v$ successive pairs, the probability than any two are synchronized is $M_v/n$.
-\color{black}
-\end{comment}
+They turn out to be Eqs.~(\ref{appa}), (\ref{appb}), and (\ref{appc}).
 
-\section{\label{sec:Conclusion}Conclusion}
-We propose a new class of parallel pseudorandom number generators based on a non-cryptographic RSA exponentiation cipher 
-operating on 64-bit messages. The method is fully scalable based on parametrization since each process can be assigned a unique composite 
-modulus $n=p_1 p_2$, where $p_1$ and $p_2$ are 32-bit safe primes, and the period 
-of each instance greater than $8\times 10^{37}$. % There are hundreds of millions of possible independent streams in our implementation.
-%Since the algorithm is parallelizable in each process and requires only native 64-bit integer operations, 
-By vectorizing the calculation, the method can produce over one-hundred million pseudorandom numbers per second on each a node of a multi-core supercomputer. We tested thousands of different pseudorandom streams, and all passed a battery of statistical tests. The C source code 
-is available at 
-\url{https://github.com/PDBeale/randomRSA.git}.
+% The \nocite command causes all entries in a bibliography to be printed out
+% whether or not they are actually referenced in the text. This is appropriate
+% for the sample file to show the different styles of references, but authors
+% most likely will not want to use it.
+\nocite{*}
 
+\bibliography{apssamp}% Produces the bibliography via BibTeX.
 
-\section{Acknowledgements} We dedicate this paper to the late Rudy L. Horne. We thank Rudy, Matt Glaser, Nick Mousouris, Ethan Neil, Robert Blackwell, John Black, David Grant  and Nick Featherstone for helpful discussions. 
-This work utilized the RMACC Summit supercomputer, which is supported by the National Science Foundation (awards ACI-1532235 and ACI-1532236), the University of Colorado Boulder, and Colorado State University. The Summit supercomputer is a joint effort of the University of Colorado Boulder and Colorado State University.\cite{RMACC}
-
-
-
-
-
-\begin{thebibliography}{5}
-
-
-\bibitem{rsa1978} R. Rivest, A. Shamir, and  L. Adelman, 
-%{Communications of the ACM} 
-Commun. ACM
-\textbf{21}, 120 (1978).
-
-\bibitem{FergusonSchneierKohno2010} N. Ferguson, B. Schneier, T. Kohno, \textit{Cryptography Engineering: Design Principles and Applications}, (Wiley, Indianapolis, 2010).
-
-\bibitem{Schneier1994} B. Schneier, \textit{Applied Cryptography} (Wiley, New York, 1994).
-
-\bibitem{Koshy2002} T. Koshy,  \textit{Elementary Number Theory and Applications} (Academic, San Diego, 2002).
-
-\bibitem{Silverman2006} J.H. Silverman,  \textit{A Friendly Introduction to Number Theory} (Pearson, New York, 2006).
-
-\bibitem{Koblitz1987} N. Koblitz, \textit{A Course in Number Theory and Cryptography} (Springer-Verlag, New York, 1987).
-
-
-
-\bibitem{NumericalRecipes1992} W.H. Press, S.A. Teukolsky, W.T. Vetterling, and B.P. Flannery, \textit{Numerical Recipes: The Art of Scientific Computing}, (Cambridge, New York, 1992), 2nd ed.  
-%1256 pp.(Cambridge University Press, Cambridge, 1992). This edition of \textsl{Numerical Recipes} describes a Data Encryption Standard (DES)-like 64-bit encryption of a simple sequence of messages to generate a pseudorandom sequence.
-
-\bibitem{Rijmen} V. Rijmen, A. Bossel¾rs, and P. Barreto. Optimised ANSI C code for the Rijndael cipher (now AES), 2000. Public domain software.
-
-
-\bibitem{Random123} J.K. Salmon, M.A. Moraes, R.O. Dror, and D.E. Shaw, 
-Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis (SC11), New York, NY: ACM, 2011. doi:10.1145/2063384.2063405 .
-%John K. Salmon, Mark A. Moraes, Ron O. Dror, and David E. Shaw, "Parallel Random Numbers: As Easy as 1, 2, 3," Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis (SC11), New York, NY: ACM, 2011. doi:10.1145/2063384.2063405 ??
-
-\bibitem{U01Test} P. L'Ecuyer and R. Simard, %ACM Transactions on Mathematical Software 
-ACM Trans. Math. Software 
-\textbf{33}, 22 (2007); see \url{http://www.iro.umontreal.ca/~simardr/testu01/tu01.html}.
-
-
-
-
-%\bibitem{BlumMichali} M. Blum and S. Micali, %How to generate cryptographically strong sequence of pseudo-random bits, SIAM J. Comput., Vol. 13, 1984, pp. 850Ð864. SIAM J. Comput. \textbf{13}, 850, (1984).
-
-%\bibitem{PatelSundaram} S. Patel and G.S. Sundaram, CRYPTOÕ98, LNCS \textbf{1462}, 304, (1998).
-
-\bibitem{Shparlinski2000} I.E. Shparlinski, Math. Comp. \textbf{70}, 801 (2000).
-
-
-\bibitem{Coddington} P.D. Coddington, %"Random Number Generators for Parallel Computers" (1997). 
-Northeast Parallel Architecture Center. Paper 13. \url{https://surface.syr.edu/npac/13/} (1997)
-
-
-\bibitem{BaukeMertens2007}H. Bauke and S. Mertens, Phys. Rev. E \textbf{75}, 066701 (2007).
-
-
-
-\bibitem{MascagniSrinivasan2000}
-M. Mascagni and A. Srinivasan, %(2000), "Algorithm 806: SPRNG: A Scalable Library for Pseudorandom Number Generation," 
-ACM Trans. Math. Software
-%ACM Transactions on Mathematical Software 
-\textbf{26}, 436 (2000).
-% This paper describes the SPRNG library and gives an overview of the mathematical foundation for the random number generators in SPRNG, the computational techniques used in parallelization, the randomness testing suite in SPRNG, and shows how the library can be used to provide reliable and reproducible parallel Monte Carlo computations.  SPRNG is the first library of its kind.
-
-\bibitem{sprng} The Scalable Parallel Random Number Generators Library (SPRNG), \url{http://www.sprng.org}.
-
-
-
-\bibitem{mascagni1998} M. Mascagni, %(1998), %"Parallel Linear Congruential Generators with Prime Moduli," 
-%Parallel Computing 
-Parallel Comput. 
-\textbf{24}, 923 (1998).  %This paper derives a method for parameterizing primitive roots modulo a prime and uses this as the basis for providing parallel linear congruential random numbers.  In addition, an efficient algorithm for finding the ith integer relatively prime to given, factored, integer is presented.
-
-%\bibitem{poweroftwocongruentialweaknesses} The period of every such generator is $p$, and the low order bits are highly correlated within each stream, as well as between streams. 
-
-\bibitem{mascagni1995a} M. Mascagni, M. L. Robinson, D. V. Pryor and S. A. Cuccaro, %(1995), "Parallel Pseudorandom Number Generation Using Additive Lagged-Fibonacci Recursions", 
-{Lec. Notes Statistics} \textbf{106}, 263 (1995).%  This paper proves bounds on exponential sum bounds used to estimate the cross-correlation between different random number streams produced using our parallelization of additive lagged-Fibonacci generators.
-
-\bibitem{mascagni1995b} M. Mascagni, S. A. Cuccaro, D. V. Pryor and M. L. Robinson,  %(1995), "A Fast, High Quality, and Reproducible Parallel Lagged-Fibonacci Pseudorandom Number Generator", 
-{J. Comp. Phys.} \textbf{119}, 211 (1995).%-219.  This paper presents a novel parameterization of additive lagged-Fibonacci generators based on seeding.  This approach is used as the basis of providing a parallel version of this generator that requires no interprocessor communication while assuring that different processors get distinct random number streams.
-
-\bibitem{MersenneTwister} M. Matsumoto and T. Nishimura, %(1998). "Mersenne twister: a 623-dimensionally equidistributed uniform pseudo-random number generator". 
-%ACM Transactions on Modeling and Computer Simulation 
-ACM Trans. Model. Comput. Sim. \textbf{8(1)}, 3 (1998).
-
-\bibitem{knuth}D. Knuth, \textit{The Art of Computer Programming}, vol. 2 (Addison-Wesley, Reading, Massachusetts, 1999).
-
-\bibitem{ZierlerBrillhart}N. Zierler and J. Brillhart, Info. and Control \textbf{13}, 541 (1968).
-
-\bibitem{Merkle1978} R.C. Merkle,  Communications of the ACM. \textbf{21 (4)}: 294 (1978).%"A Digital Signature Based on a Conventional Encryption Function". 
-%Advances in Cryptology Ñ CRYPTO '87. Lecture Notes in Computer Science. \textbf{293}. 369, (1988). doi:10.1007/3-540-48184-2_32. 
-% Merkle, Ralph C. (April 1978). Communications of the ACM. \textbf{21 (4)}: 294 (1978).
-
-\bibitem{DiffieHellman1976} W. Diffie, and M.E. Hellman, IEEE Transactions on Information Theory. \textbf{22 (6)}, 644  
-(1976).
-%doi:10.1109/TIT.1976.1055638. Archived (PDF) from the original on 2014-11-29.
-
-\bibitem{SinghCodeBook}S. Singh, \textit{The Code Book}, (Doubleday, New York, 1999).
-
-\bibitem{Shor} P.W. Shor, SIAM J. Comp. \textbf{26}, 1484 (1977); \url{https://arxiv.org/abs/quant-ph/9508027}.
-
-
-\bibitem{CarmichaelTotient}Fpr the case $n=p_1 p_2$, a smaller value of $d$ can be obtained using $d=e^{-1}\thinspace\textrm{mod}\thinspace \lambda(n)$, where $\lambda(n)=(p_1-1)(p_2-1)/\textrm{gcd}(p_1-1,p_2-1)$, is Carmichael's totient function. This does not make a difference for RSA applications that use CRT since the exponents used in the decryption $d_1=d\thinspace\textrm{mod}\thinspace  (p_1-1)$ and $d_2=d\thinspace\textrm{mod}\thinspace  (p_2-1)$ that result are the same as using $\phi(n)$.
-
-
-
-
-
-
-
-\bibitem{WichmanHill1982} B.A Wichmann, and I.D. Hill, I.D,  Appl. Stat. \textbf{31}, 188 (1982).
-
-\bibitem{BratleyFoxSchrage1987} P. Bratley, B. L. Fox,, and L.E. Schrage,. \textit{A Guide to Simulation}, 2nd ed..  (Springer-Verlag, New York, 1987).
-%Bratley, P., Fox, B.L., and Scbrage, L.E. A Guide to Simulation. Springer-Verlag, New York, N.Y., 2nd ed.. 1987.
-
-\bibitem{lecuyer1988} P. L'Ecuyer, Commun. ACM \textbf{31}, 741 (1988).
-
-%\bibitem{lecuyer1999} P. L'Ecuyer, Math. Comp. \textbf{68}, 249 (1999).
-
-
-\bibitem{LecuyerBlouinCouture1993} P. L'Ecuyer. F.-O. Blouin, and R. Couture, ACM Trans. Model. Comput. Simul.. \textbf{3}, 87 (1993). They recommend primitive root $a=2307085864$.
-
-\bibitem{SezginSezgin2013} F. Sezgin, T. M. Sezgin, Comp. Phys. Comm. \textbf{184}, 1889  (2013). Not all of the multipliers in Table 4 are primitive roots mod $q=2^{63}-25$. We have confirmed that multipliers \hfil\break
-$a=\{3157107955,3163786287, 3200261722, 3211103532,3338736601, 3423977237, 3465965455, 3474009732, 3512424704\}$ are primitive roots mod $q$ and pass all U01 Crush and BigCrush tests.
-
-
-
-
-
-
-
-
-\bibitem{SophieGermain}This makes $(p-1)/2$ a Sophie Germain prime.
-
-
-\bibitem{PohligHellman1978} S. Pohlig and M. Hellman, %\textsl{An Improved Algorithm for Computing Logarithms over GF(p) and its Cryptographic Significance}. 
-IEEE Transactions on Information Theory IEEE Trans. Inform. Theory \textbf{(24)}, 106 (1978).
-
-
-\bibitem{Beale2014} P.D. Beale, \url{https://arxiv.org/abs/1411.2484}.
-
-\bibitem{http://oeis.org/A036378} \textit{The On-Line Encyclopedia of Integer Sequences}, \url{http://oeis.org/A036378}.
-
-\bibitem{http://oeis.org/A211395} \textsl{The On-Line Encyclopedia of Integer Sequences}, \url{http://oeis.org/A211395}; \url{http://oeis.org/A211397}.
-
-\bibitem{millerprime} G.L. Miller,  %{Journal of Computer Systems Science} 
-J. Comp. Sys. Sci.
-\textbf{13}, 300 %``Riemann's Hypothesis and Tests for Primality'' 
-(1976).
-
-\bibitem{rabinprime} M.O. Rabin, %{Journal of Number Theory} 
-J. Number Theory
-\textbf{12}, 128
-%``probabilistic algorithm for testing primality'' 
- (1980).
-
-
-
-\bibitem{PomeranceSelfridgeFlagstaff1980} C. Pomerance, J. L. Selfridge and S. S. Wagstaff, Jr., %The pseudoprimes to 25.10^9, 
-Math. Comp
-\textbf{35}, 1003 (1980).
-
-\bibitem{http://oeis.org/A014233} \textsl{The On-Line Encyclopedia of Integer Sequences} \url{http://oeis.org/A014233}.
-
-
-
-\bibitem{Zhang2001} Zhenxiang Zhang, %Finding strong pseudoprimes to several bases, 
-Math. Comp. \textbf{70}, 863 (2001).
-%no. 234, 863-872. MR1697654(2001g:11009)
-
-\bibitem{JiangDeng2012}
-%Strong pseudoprimes to the first 9 prime bases
-Y. Jiang and Y. Deng, \url{http://arxiv.org/abs/1207.0063v1}.
-%Yupeng Jiang and Yingpu Deng \url{http://arxiv.org/abs/1207.0063v1}
-%, pp. 1003-1026.
-%\bibitem{latex}Helmut Kopka and Patrick W. Daly, \textsl{A Guide to \LaTeX: Document Preparation for Beginners and Advanced Users},fourth edition, Addison-Wesley (2004).
-
-\bibitem{wolframrabinmiller}See \url{http://mathworld.wolfram.com/Rabin-MillerStrongPseudoprimeTest.html}.
-
-
-%\bibitem{pohlig-hellansmallexponents} A cryptographically secure implementation of the Pohlig--Hellman cipher would ordinarily be implemented with randomly chosen exponents of the same order as $p$, since that would force an  eavesdropper to resort to solving the discrete logarithm problem, even if she knew $p$.\cite{Koshy2002, Silverman2006, Koblitz1987}
-
-
-
-%\bibitem{BayesDurham} C. Bays and S.D. Durham, 
-%{ACM Transactions on Mathematical Software} ACM Trans. Math. Software \textbf{2}, 59 (1976).
-%[Bays and Durham 1976] Carter Bays, S.D. Durham, "Improving a Poor Random Number Generator." ACM Transactions on Mathematical Software March 1976, Vol. 2, No. 1, Pages 59-64.
-
-%\bibitem{wiener} M.J. Wiener, \textsl{IEEE Transactions of Information Theory} 36, 553 (1990).
-
-%\bibitem{plessthann}The mathematical form of the message sequence can be used to demonstrate why the method requires $p<n$. If $n=p$, one can evaluate the sum in equation \eqref{pseudoskipb} in closed form to give $m_k = (m_0 + s_0 a(a-1)^{-1}(a^k-1))\thinspace\textrm{mod}\thinspace p$. $m_k = (m_0 + s_0 a(a-1)^{-1}(a^k-1))\thinspace\textrm{mod}\thinspace n$. Therefore, using Fermat's little theorem, $m_{k+p-1}=m_k$ and $s_{k+p-1}=s_k$, so period is reduced to $P=p-1$. 
-
-\bibitem{diehard} G. Marsaglia, DIEHARD: a battery of tests of randomness (1996); 
-see \url{http://stat.fsu.edu/pub/diehard/}.
-
-\bibitem{NIST} A. Rukhin, J. Soto, J. Nechvatal, M. Smid, E. Barker, S. Leigh, M. Levenson, M. Vangel, D. Banks, A. Heckert, J. Dray, and S. Vo, %A statistical test suite for random and pseudorandom number generators for cryptographic applications. 
-NIST special publication 800-22, National Institute of Standards and Technology (NIST), Gaithersburg, Maryland, USA, 2001; see \url{http://csrc.nist.gov/rng/}.
-
-\bibitem{fft} J.W. Cooley, J.W. Tukey, %"An algorithm for the machine calculation of complex Fourier series". 
-Math. Comp. \textbf{19}, 297 (1965). .
-
-%\bibitem{fft} J.W. Cooley and J.W. Tukey, Math. Comput. \textbf{19}, 297 (1965).
-
-\bibitem{beale1996} P.D. Beale, {Phys. Rev. Lett.} \textbf{76}, 78 (1996).
-
-
-\bibitem{pathriabeale2011} R.K. Pathria and P.D. Beale, \textit{Statistical Mechanics} 3rd ed., (Academic, Boston, 2011).
-
-
-
-\bibitem{wolff} U. Wolff, {Phys. Rev. Lett.} \textbf{62}, 361 (1989).
-
-\bibitem{ferrenberglandauwong1992} A.M. Ferrenberg, D.P. Landau and Y.J. Wong, {Phys. Rev. Lett.} \textbf{69}, 3382 (1992).
-
-
-%Wichmann, B.A and Hill, I.D. An efficient and portable pseudo-random number generator. Appl. Stat. 31 (1982), 188-190.
-
-
-
-%\bibitem{poweroftwoskips}One might consider using power-of-two linear congruential generators for the skip generator since they form a scalable class,\cite{MascagniSrinivasan2000, sprng, lecuyer1999} but we have not investigated the effects the strong correlations in the low-order bits of the skips might have on correlations of the ciphertexts.
-
-
-
-\bibitem{RMACC} Jonathon Anderson, Patrick J. Burns, Daniel Milroy, Peter Ruprecht, Thomas Hauser, and Howard Jay Siegel. 2017. Deploying RMACC Summit: An HPC Resource for the Rocky Mountain Region. In Proceedings of PEARC17, New Orleans, LA, USA, July 09-13, 2017, 7 pages. DOI: 10.1145/3093338.3093379
-
-
-%\bibitem{KirkpatrickStoll} S.Kirkpatrick and E.  Stoll, J. Comp. Phys, \textbf{40}, 517 (1981).
-
-\end{thebibliography}
-
-
- 
 \end{document}
-
+%
+% ****** End of file apssamp.tex ******
